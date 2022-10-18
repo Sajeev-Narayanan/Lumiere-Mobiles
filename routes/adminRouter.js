@@ -15,5 +15,9 @@ adminRouter.get("/showorder", adminControllers.showorder);
 adminRouter.get("/showUser", adminControllers.showUser);
 adminRouter.get("/showProduct", adminControllers.showProduct);
 adminRouter.get("/addProductGet", adminControllers.addProductGet);
+adminRouter.get("/showCategory", adminControllers.showCategory);
+adminRouter.post("/addCategory", adminControllers.addCategory);
+adminRouter.get("/showBrand", adminControllers.showBrand);
+adminRouter.post("/addBrand", adminControllers.addBrand);
 
 module.exports = adminRouter;

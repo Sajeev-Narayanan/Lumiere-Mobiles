@@ -4052,21 +4052,21 @@ table.grid td {
 }
 
 .customButton-white {
-  width: 10%;
-  height: 40px;
+  width: 130px;
+  height: 35px;
   border: solid 1px white;
   color: white;
   background: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 600;
   border-radius: 5px;
 }
 .customButton-white:hover {
-  width: 10%;
-  height: 40px;
+  width: 130px;
+  height: 35px;
   border: solid 1px white;
   color: black;
   background: white;
@@ -4101,4 +4101,18 @@ table.grid td {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.form-control-2 {
+  width: 90%;
+  height: 40px;
+  border: solid 2px black;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.modal-body-2 {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
 }

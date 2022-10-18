@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const Admin = require("../models/adminSchema");
 const User = require("../models/userSchema");
+const Category = require("../models/categorySchema");
+const Brand = require("../models/brandSchema");
 
 // const homePage = (req, res) => {
 //   res.render("adminPages/adminLogin");
@@ -58,6 +60,54 @@ const addProductGet = (req, res) => {
   res.render("adminPages/addProduct");
 };
 
+const showCategory = async (req, res) => {
+  const categorys = await Category.find({});
+  res.render("adminPages/categoryMng", {
+    message: req.flash("exists"),
+    categorys,
+  });
+};
+
+const addCategory = async (req, res) => {
+  const { category } = req.body;
+
+  const newCategory = new Category({
+    category,
+  });
+  try {
+    await newCategory.save();
+  } catch (error) {
+    req.flash("exists", "Category already exists");
+
+    // res.sendStatus(404);
+  }
+  res.redirect("/admin/showCategory");
+};
+const showBrand = async (req, res) => {
+  const brands = await Brand.find({});
+  res.render("adminPages/brandMng", {
+    message: req.flash("exists"),
+    brands,
+  });
+};
+
+const addBrand = async (req, res) => {
+  const { brand } = req.body;
+
+  const newBrand = new Brand({
+    brand,
+  });
+
+  try {
+    await newBrand.save();
+  } catch (error) {
+    req.flash("exists", "Brand already exists");
+
+    // res.sendStatus(404);
+  }
+  res.redirect("/admin/showBrand");
+};
+
 exports.signinPage = signinPage;
 exports.signin = signin;
 exports.dashboard = dashboard;
@@ -66,3 +116,7 @@ exports.showorder = showorder;
 exports.showUser = showUser;
 exports.showProduct = showProduct;
 exports.addProductGet = addProductGet;
+exports.showCategory = showCategory;
+exports.addCategory = addCategory;
+exports.showBrand = showBrand;
+exports.addBrand = addBrand;
