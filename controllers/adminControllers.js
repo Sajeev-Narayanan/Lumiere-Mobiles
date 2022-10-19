@@ -3,6 +3,7 @@ const Admin = require("../models/adminSchema");
 const User = require("../models/userSchema");
 const Category = require("../models/categorySchema");
 const Brand = require("../models/brandSchema");
+const Product = require("../models/productSchema");
 
 // const homePage = (req, res) => {
 //   res.render("adminPages/adminLogin");
@@ -56,8 +57,50 @@ const showProduct = (req, res) => {
   res.render("adminPages/productMng");
 };
 
-const addProductGet = (req, res) => {
-  res.render("adminPages/addProduct");
+const addProductGet = async (req, res) => {
+  const brand = await Brand.find({});
+  const category = await Category.find({});
+  res.render("adminPages/addProduct", {
+    brand,
+    category,
+    message: req.flash("exists"),
+  });
+};
+
+const addProductPost = async (req, res) => {
+  const {
+    product_name,
+    category_id,
+    brand_id,
+    ram,
+    internal,
+    battery,
+    price,
+    discount,
+    description,
+  } = req.body;
+
+  const product = new Product({
+    product_name,
+    category_id,
+    brand_id,
+    ram,
+    internal,
+    battery,
+    price,
+    discount,
+    description,
+  });
+
+  product.image = req.files.map((f) => ({ url: f.path, filename: f.filename }));
+  try {
+    await product.save();
+  } catch (error) {
+    req.flash("exists", "Product already exists");
+    // console.log(error);
+  }
+
+  res.redirect("/admin/showProduct");
 };
 
 const showCategory = async (req, res) => {
@@ -116,6 +159,7 @@ exports.showorder = showorder;
 exports.showUser = showUser;
 exports.showProduct = showProduct;
 exports.addProductGet = addProductGet;
+exports.addProductPost = addProductPost;
 exports.showCategory = showCategory;
 exports.addCategory = addCategory;
 exports.showBrand = showBrand;

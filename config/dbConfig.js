@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const mongoose = require("mongoose");
 
 // const User = require('./models/userSchema');
@@ -11,13 +15,10 @@ const mongoose = require("mongoose");
 //     })
 const dbconfig = async () => {
   try {
-    await mongoose.connect(
-      "mongodb://127.0.0.1:27017/royalmobiles?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.4",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    );
+    await mongoose.connect(process.env.mongoConnect, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("connetcted");
   } catch {
     console.log("OH NO MONGO CONNECTION ERROR!!!!");

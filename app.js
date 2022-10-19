@@ -1,16 +1,25 @@
-const express = require("express");
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
+const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const ejsmate = require("ejs-mate");
 const cors = require("cors");
 const dbconfig = require("./config/dbConfig");
+const userRoutes = require("./routes/userRouter");
+
+const adminRoutes = require("./routes/adminRouter");
 
 const session = require("express-session");
 
 const flash = require("connect-flash");
 
 const methodOverride = require("method-override");
+
+// const multer = require("multer");
+// const upload = multer({ dest: "" });
 
 const app = express();
 
@@ -28,7 +37,7 @@ app.use(function (req, res, next) {
 });
 
 const store = new MongoDBStore({
-  uri: "mongodb://127.0.0.1:27017/royalmobiles?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.4",
+  uri: process.env.mongoDbStoreUri,
   collection: "sessionValues",
 });
 store.on("error", function (error) {
@@ -62,11 +71,7 @@ app.use(express.static("files"));
 
 app.engine("ejs", ejsmate);
 
-const userRoutes = require("./routes/userRouter");
-
-const adminRoutes = require("./routes/adminRouter");
-
-app.use("/users", userRoutes);
+app.use("/", userRoutes);
 
 app.use("/admin", adminRoutes);
 
@@ -78,10 +83,6 @@ app.use((req, res, next) => {
   );
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
   next();
-});
-
-app.get("/", (req, res) => {
-  res.render("userpages/home");
 });
 
 app.get("*", (req, res, next) => {

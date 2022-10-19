@@ -6,6 +6,8 @@ const userRouter = express.Router();
 
 userRouter.use(express.static("public"));
 
+userRouter.get("/", userControllers.home);
+
 userRouter.get("/login", userControllers.loginPageGet);
 
 userRouter.get("/signup", userControllers.signupPageGet);

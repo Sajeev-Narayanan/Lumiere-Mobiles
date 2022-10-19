@@ -12,11 +12,11 @@ const productSchema = new Schema({
   category_id: { type: ObjectId, trim: true },
 
   brand_id: { type: ObjectId, trim: true },
-  ram: { type: number, trim: true },
-  memory: { type: number, trim: true },
-  battery: { type: number, trim: true },
-  price: { type: number, trim: true },
-  discount: { type: number, trim: true },
+  ram: { type: Number, trim: true },
+  memory: { type: Number, trim: true },
+  battery: { type: Number, trim: true },
+  price: { type: Number, trim: true },
+  discount: { type: Number, trim: true },
   description: {
     type: String,
 

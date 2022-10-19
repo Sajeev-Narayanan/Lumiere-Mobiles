@@ -9,13 +9,17 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
           <h5 class="card-title">ADD PRODUCTS</h5>
 
           <div class="tab-pane" id="edit">
-            <form>
+            <form
+              action="/admin/addProductPost"
+              method="post"
+              enctype="multipart/form-data"
+            >
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label form-control-label"
                   >Product Name</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="text" />
+                  <input class="form-control" type="text" name="product_name" />
                 </div>
               </div>
               <div class="form-group row">
@@ -23,7 +27,11 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >Category</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="text" />
+                  <select name="category_id" id="category" class="form-control">
+                    <%for(value of category){ %>
+                    <option value="<%=value._id%>"><%=value.category%></option>
+                    <%}%>
+                  </select>
                 </div>
               </div>
               <div class="form-group row">
@@ -31,7 +39,11 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >Brand</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="text" />
+                  <select name="brand_id" id="brand" class="form-control">
+                    <% for(values of brand ){ %>
+                    <option value="<%=values._id%>"><%= values.brand%></option>
+                    <% } %>
+                  </select>
                 </div>
               </div>
               <div class="form-group row">
@@ -39,7 +51,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >RAM (GB)</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="number" />
+                  <input class="form-control" type="number" name="ram" />
                 </div>
               </div>
               <div class="form-group row">
@@ -47,7 +59,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >Internal Memory (GB)</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="number" value="" />
+                  <input class="form-control" type="number" name="internal" />
                 </div>
               </div>
               <div class="form-group row">
@@ -55,7 +67,12 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >Battery (mAh)</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="number" value="" />
+                  <input
+                    class="form-control"
+                    type="number"
+                    value=""
+                    name="battery"
+                  />
                 </div>
               </div>
               <div class="form-group row">
@@ -63,23 +80,33 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >Price</label
                 >
                 <div class="col-lg-4">
-                  <input class="form-control" type="text" value="" />
+                  <input
+                    class="form-control"
+                    type="text"
+                    value=""
+                    name="price"
+                  />
                 </div>
                 <label class="col-lg-1 col-form-label form-control-label"
                   >Discount (%)</label
                 >
                 <div class="col-lg-4">
-                  <input class="form-control" type="text" value="" />
+                  <input
+                    class="form-control"
+                    type="text"
+                    value=""
+                    name="discount"
+                  />
                 </div>
               </div>
 
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label form-control-label"
-                  >Discription</label
+                  >Description</label
                 >
                 <div class="col-lg-9">
                   <textarea
-                    name="discription"
+                    name="description"
                     id="discription"
                     cols="30"
                     rows="10"
@@ -93,7 +120,13 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >Images</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="file" value="" multiple />
+                  <input
+                    class="form-control"
+                    type="file"
+                    value=""
+                    name="image"
+                    multiple
+                  />
                 </div>
               </div>
               <!-- <div class="form-group row">
@@ -118,11 +151,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                     class="btn btn-secondary"
                     value="Cancel"
                   />
-                  <input
-                    type="button"
-                    class="btn btn-primary"
-                    value="Save Changes"
-                  />
+                  <input type="submit" class="btn btn-primary" value="Save" />
                 </div>
               </div>
             </form>

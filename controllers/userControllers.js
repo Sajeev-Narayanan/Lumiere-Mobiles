@@ -1,6 +1,10 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/userSchema");
 
+const home = (req, res) => {
+  res.render("userpages/home");
+};
+
 const loginPageGet = (req, res) => {
   res.render("userpages/login");
 };
@@ -23,13 +27,14 @@ const signup = async (req, res) => {
   });
   try {
     await user.save();
-    res.redirect("/users/login");
+    res.redirect("/login");
   } catch (error) {
     console.log(error);
-    res.redirect("/users/signup");
+    res.redirect("/signup");
   }
 };
 
+exports.home = home;
 exports.signup = signup;
 
 exports.loginPageGet = loginPageGet;
