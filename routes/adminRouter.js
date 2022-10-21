@@ -17,8 +17,20 @@ adminRouter.get("/logout", adminControllers.logout);
 adminRouter.get("/showorder", adminControllers.showorder);
 adminRouter.get("/showUser", adminControllers.showUser);
 adminRouter.get("/showProduct", adminControllers.showProduct);
-adminRouter.get("/addProductGet", adminControllers.addProductGet);
-adminRouter.post("/addProductPost", adminControllers.addProductPost);
+// adminRouter.get("/addProductGet", adminControllers.addProductGet);
+// adminRouter.post("/addProductPost", adminControllers.addProductPost);
+adminRouter
+  .route("/addProduct")
+  .get(adminControllers.addProductGet)
+  .post(upload.array("image"), adminControllers.addProductPost);
+
+adminRouter.delete("/deleteProduct/:_id", adminControllers.deleteProduct);
+adminRouter.get("/editProductGet/:_id", adminControllers.editProductGet);
+adminRouter.put(
+  "/editProductEdit/:_id",
+  upload.array("image"),
+  adminControllers.editProductEdit
+);
 adminRouter.get("/showCategory", adminControllers.showCategory);
 adminRouter.post("/addCategory", adminControllers.addCategory);
 adminRouter.get("/showBrand", adminControllers.showBrand);

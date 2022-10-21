@@ -4,6 +4,7 @@ const User = require("../models/userSchema");
 const Category = require("../models/categorySchema");
 const Brand = require("../models/brandSchema");
 const Product = require("../models/productSchema");
+const { cloudinary } = require("../cloudinary");
 
 // const homePage = (req, res) => {
 //   res.render("adminPages/adminLogin");
@@ -53,8 +54,26 @@ const showUser = async (req, res) => {
   // res.render("adminPages/userMng");
 };
 
-const showProduct = (req, res) => {
-  res.render("adminPages/productMng");
+const showProduct = async (req, res) => {
+  const productFind = await Product.aggregate([
+    {
+      $lookup: {
+        from: "categories",
+        localField: "category_id",
+        foreignField: "_id",
+        as: "category",
+      },
+    },
+    {
+      $lookup: {
+        from: "brands",
+        localField: "brand_id",
+        foreignField: "_id",
+        as: "brand",
+      },
+    },
+  ]);
+  res.render("adminPages/productMng", { productFind });
 };
 
 const addProductGet = async (req, res) => {
@@ -73,7 +92,7 @@ const addProductPost = async (req, res) => {
     category_id,
     brand_id,
     ram,
-    internal,
+    memory,
     battery,
     price,
     discount,
@@ -85,7 +104,7 @@ const addProductPost = async (req, res) => {
     category_id,
     brand_id,
     ram,
-    internal,
+    memory,
     battery,
     price,
     discount,
@@ -95,14 +114,119 @@ const addProductPost = async (req, res) => {
   product.image = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   try {
     await product.save();
+    res.redirect("/admin/showProduct");
   } catch (error) {
     req.flash("exists", "Product already exists");
     // console.log(error);
+    res.redirect("/admin/addProduct");
   }
+};
+const deleteProduct = async (req, res) => {
+  const productId = req.params._id;
+  // console.log(userId);
+  try {
+    await Product.findByIdAndDelete(productId);
+    res.redirect("/admin/showProduct");
+  } catch (error) {}
+};
+// edit product start ###########################################
+const editProductGet = async (req, res) => {
+  const product = await Product.findById(req.params._id);
+  const uid = product._id;
 
-  res.redirect("/admin/showProduct");
+  const categorylook = await Product.aggregate([
+    {
+      $match: {
+        _id: uid,
+      },
+    },
+    {
+      $lookup: {
+        from: "categories",
+        localField: "category_id",
+        foreignField: "_id",
+        as: "category",
+      },
+    },
+  ]);
+  const brandlook = await Product.aggregate([
+    {
+      $match: {
+        _id: uid,
+      },
+    },
+    {
+      $lookup: {
+        from: "brands",
+        localField: "brand_id",
+        foreignField: "_id",
+        as: "brand",
+      },
+    },
+  ]);
+  // console.log(brandLookup)
+  const brandFind = await Brand.find({});
+  const categoryFind = await Category.find({});
+  res.render("adminPages/editProduct", {
+    product,
+    categorylook,
+    categoryFind,
+    brandlook,
+    brandFind,
+  });
 };
 
+const editProductEdit = async (req, res) => {
+  const phots = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
+
+  const {
+    product_name,
+    category_id,
+    brand_id,
+    ram,
+    memory,
+    battery,
+    price,
+    discount,
+    description,
+  } = req.body;
+
+  try {
+    const product = await Product.findByIdAndUpdate(req.params._id, {
+      product_name,
+      category_id,
+      brand_id,
+      ram,
+      memory,
+      battery,
+      price,
+      discount,
+      description,
+    });
+
+    product.image.push(...phots);
+    product.save();
+    console.log(req.body.deleteImages);
+    if (req.body.deleteImages) {
+      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+      for (let filename of req.body.deleteImages) {
+        await cloudinary.uploader.destroy(filename);
+        console.log("##################");
+      }
+      await product.updateOne({
+        $pull: { image: { filename: { $in: req.body.deleteImages } } },
+      });
+      console.log("******************");
+    }
+    res.redirect("/admin/showProduct");
+  } catch (err) {
+    console.log(err._message);
+  }
+};
+// edit product end ################################################
 const showCategory = async (req, res) => {
   const categorys = await Category.find({});
   res.render("adminPages/categoryMng", {
@@ -160,6 +284,9 @@ exports.showUser = showUser;
 exports.showProduct = showProduct;
 exports.addProductGet = addProductGet;
 exports.addProductPost = addProductPost;
+exports.deleteProduct = deleteProduct;
+exports.editProductGet = editProductGet;
+exports.editProductEdit = editProductEdit;
 exports.showCategory = showCategory;
 exports.addCategory = addCategory;
 exports.showBrand = showBrand;

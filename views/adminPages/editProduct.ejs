@@ -6,11 +6,11 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">ADD PRODUCTS</h5>
+          <h5 class="card-title">EDIT PRODUCTS</h5>
 
           <div class="tab-pane" id="edit">
             <form
-              action="/admin/addProduct"
+              action="/admin/editProductEdit/<%= product._id %>?_method=PUT"
               method="post"
               enctype="multipart/form-data"
             >
@@ -19,7 +19,12 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >Product Name</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="text" name="product_name" />
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="product_name"
+                    value="<%= product.product_name %> "
+                  />
                 </div>
               </div>
               <div class="form-group row">
@@ -28,9 +33,14 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                 >
                 <div class="col-lg-9">
                   <select name="category_id" id="category" class="form-control">
-                    <%for(value of category){ %>
-                    <option value="<%=value._id%>"><%=value.category%></option>
-                    <%}%>
+                      <%for(value of categoryFind){%>
+                                                                    <option value="<%=value._id%>"
+                                                                        <%if(categorylook[0].category[0].category==(value.category)){
+                                                                        %> selected
+                                                                        <%}%>>
+                                                                            <%=value.category%>
+                                                                    </option>
+                                                                    <% } %>
                   </select>
                 </div>
               </div>
@@ -40,9 +50,14 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                 >
                 <div class="col-lg-9">
                   <select name="brand_id" id="brand" class="form-control">
-                    <% for(values of brand ){ %>
-                    <option value="<%=values._id%>"><%= values.brand%></option>
-                    <% } %>
+                   <% for(value of brandFind){ %>
+                                                            <option value="<%=value.id%>"
+                                                                <%if(brandlook[0].brand[0].brand==(value.brand)){ %>"
+                                                                selected
+                                                                <%}%>>
+                                                                    <%=value.brand%>
+                                                            </option>
+                                                            <% } %>
                   </select>
                 </div>
               </div>
@@ -51,7 +66,12 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >RAM (GB)</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="number" name="ram" />
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="ram"
+                    value="<%= product.ram %> "
+                  />
                 </div>
               </div>
               <div class="form-group row">
@@ -59,7 +79,12 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   >Internal Memory (GB)</label
                 >
                 <div class="col-lg-9">
-                  <input class="form-control" type="number" name="memory" />
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="internal"
+                    value="<%= product.memory %> "
+                  />
                 </div>
               </div>
               <div class="form-group row">
@@ -69,8 +94,8 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                 <div class="col-lg-9">
                   <input
                     class="form-control"
-                    type="number"
-                    value=""
+                    type="text"
+                    value="<%= product.battery %> "
                     name="battery"
                   />
                 </div>
@@ -83,7 +108,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   <input
                     class="form-control"
                     type="text"
-                    value=""
+                    value="<%= product.price %> "
                     name="price"
                   />
                 </div>
@@ -94,7 +119,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   <input
                     class="form-control"
                     type="text"
-                    value=""
+                    value="<%= product.discount %> "
                     name="discount"
                   />
                 </div>
@@ -111,7 +136,9 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                     cols="30"
                     rows="10"
                     class="form-control"
-                  ></textarea>
+                  >
+<%= product.description %> </textarea
+                  >
                   <!-- <input class="form-control" type="" value="jhonsanmark" /> -->
                 </div>
               </div>
@@ -129,19 +156,16 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   />
                 </div>
               </div>
-              <!-- <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label"
-                  >Confirm password</label
-                >
-                <div class="col-lg-9">
-                  <input
-                    class="form-control"
-                    type="password"
-                    value="11111122333"
-                  />
+              <div class="mb-3">
+                <% product.image.forEach(function(img, i) {  %>
+                <img src="<%=img.thumbnail %>" class="img-thumbnail" alt="">
+                <div class="form-check-inline">
+                    <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
                 </div>
-              </div> -->
-              <div class="text-danger"><%= message %></div>
+                <label for="image-<%=i%>">Delete?</label>
+                <% })%>
+            </div>
+
               <div class="form-group row">
                 <label
                   class="col-lg-3 col-form-label form-control-label"
