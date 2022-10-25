@@ -17,6 +17,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 
 const methodOverride = require("method-override");
+const nodemailer = require("nodemailer");
 
 // const multer = require("multer");
 // const upload = multer({ dest: "" });
@@ -86,7 +87,7 @@ app.use((req, res, next) => {
 });
 
 app.get("*", (req, res, next) => {
-  res.send("404, Not found").status(404);
+  res.render("pageNotFound.ejs").status(404);
 });
 
 app.listen(5000, () => {

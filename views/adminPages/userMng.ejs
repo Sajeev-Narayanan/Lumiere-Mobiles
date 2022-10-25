@@ -34,9 +34,17 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   <td><%= datas.mobile %></td>
                   <td></td>
                   <td>
-                    <a href="/admin/addProductGet" class="customButton-red"
+                    <% if(datas.state == true) {%>
+                    <a
+                      href="/admin/userState/<%= datas._id %> "
+                      class="customButton-red"
                       >BLOCK</a
                     >
+                    <% }else{ %><a
+                      href="/admin/userStateUn/<%= datas._id %> "
+                      class="customButton-red"
+                      >UNBLOCK</a
+                    ><% } %>
                   </td>
                   <!-- <td>Cell</td>
                   <td>Cell</td> -->

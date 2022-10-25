@@ -4,7 +4,9 @@ const User = require("../models/userSchema");
 const Category = require("../models/categorySchema");
 const Brand = require("../models/brandSchema");
 const Product = require("../models/productSchema");
+const Stock = require("../models/stockSchema");
 const { cloudinary } = require("../cloudinary");
+const mongoose = require("mongoose");
 
 // const homePage = (req, res) => {
 //   res.render("adminPages/adminLogin");
@@ -52,6 +54,16 @@ const showUser = async (req, res) => {
   const showuser = await User.find({}).sort({ firstName: 1 });
   res.render("adminPages/userMng", { showuser });
   // res.render("adminPages/userMng");
+};
+const userState = async (req, res) => {
+  const { id } = req.params;
+  await User.findByIdAndUpdate(id, { state: false });
+  res.redirect("/admin/showUser");
+};
+const userStateUn = async (req, res) => {
+  const { id } = req.params;
+  await User.findByIdAndUpdate(id, { state: true });
+  res.redirect("/admin/showUser");
 };
 
 const showProduct = async (req, res) => {
@@ -209,17 +221,14 @@ const editProductEdit = async (req, res) => {
 
     product.image.push(...phots);
     product.save();
-    console.log(req.body.deleteImages);
+
     if (req.body.deleteImages) {
-      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$");
       for (let filename of req.body.deleteImages) {
         await cloudinary.uploader.destroy(filename);
-        console.log("##################");
       }
       await product.updateOne({
         $pull: { image: { filename: { $in: req.body.deleteImages } } },
       });
-      console.log("******************");
     }
     res.redirect("/admin/showProduct");
   } catch (err) {
@@ -229,6 +238,9 @@ const editProductEdit = async (req, res) => {
 // edit product end ################################################
 const showCategory = async (req, res) => {
   const categorys = await Category.find({});
+  // const product = await Product.find({}, { category_id: 1, _id: 0 });
+  // console.log(product);
+  console.log(categorys);
   res.render("adminPages/categoryMng", {
     message: req.flash("exists"),
     categorys,
@@ -275,12 +287,38 @@ const addBrand = async (req, res) => {
   res.redirect("/admin/showBrand");
 };
 
+const showStock = async (req, res) => {
+  const product = await Product.find({});
+  const stock = await Stock.find({});
+  res.render("adminPages/stockMng", { product, stock });
+};
+
+const addStock = async (req, res) => {
+  const { Id } = req.params;
+  const { productName, stock } = req.body;
+
+  try {
+    await Stock.updateOne(
+      { productId: Id },
+      { $set: { stock: stock, productName: productName } },
+      { upsert: true }
+    );
+
+    // await stocks.save();
+    res.redirect("/admin/showStock");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 exports.signinPage = signinPage;
 exports.signin = signin;
 exports.dashboard = dashboard;
 exports.logout = logout;
 exports.showorder = showorder;
 exports.showUser = showUser;
+exports.userState = userState;
+exports.userStateUn = userStateUn;
 exports.showProduct = showProduct;
 exports.addProductGet = addProductGet;
 exports.addProductPost = addProductPost;
@@ -291,3 +329,5 @@ exports.showCategory = showCategory;
 exports.addCategory = addCategory;
 exports.showBrand = showBrand;
 exports.addBrand = addBrand;
+exports.showStock = showStock;
+exports.addStock = addStock;

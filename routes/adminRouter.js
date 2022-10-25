@@ -16,6 +16,8 @@ adminRouter.get("/dashboard", adminControllers.dashboard);
 adminRouter.get("/logout", adminControllers.logout);
 adminRouter.get("/showorder", adminControllers.showorder);
 adminRouter.get("/showUser", adminControllers.showUser);
+adminRouter.get("/userState/:id", adminControllers.userState);
+adminRouter.get("/userStateUn/:id", adminControllers.userStateUn);
 adminRouter.get("/showProduct", adminControllers.showProduct);
 // adminRouter.get("/addProductGet", adminControllers.addProductGet);
 // adminRouter.post("/addProductPost", adminControllers.addProductPost);
@@ -35,5 +37,7 @@ adminRouter.get("/showCategory", adminControllers.showCategory);
 adminRouter.post("/addCategory", adminControllers.addCategory);
 adminRouter.get("/showBrand", adminControllers.showBrand);
 adminRouter.post("/addBrand", adminControllers.addBrand);
+adminRouter.get("/showStock", adminControllers.showStock);
+adminRouter.post("/addStock/:Id", adminControllers.addStock);
 
 module.exports = adminRouter;
