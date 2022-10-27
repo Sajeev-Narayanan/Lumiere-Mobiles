@@ -1,7 +1,5 @@
 <% layout('./layout/boilerplate') %>
 
-<!-- Start Banner Area -->
-
 <section class="banner-area organic-breadcrumb">
   <div class="container">
     <div
@@ -10,8 +8,8 @@
       <div class="col-first">
         <h1>Login/Register</h1>
         <nav class="d-flex align-items-center">
-          <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-          <a href="category.html">Login/Register</a>
+          <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+          <a href="/login">Login/Register</a>
         </nav>
       </div>
     </div>
@@ -27,18 +25,17 @@
         <div class="login_box_img">
           <img class="img-fluid" src="img/login.jpg" alt="" />
           <div class="hover">
-            <h4>New to our website?</h4>
-
-            <a class="primary-btn" href="/signup">Create an Account</a>
+            <h4>Already have an account?</h4>
+            <a class="primary-btn" href="/login"> Login</a>
           </div>
         </div>
       </div>
       <div class="col-lg-6">
         <div class="login_form_inner">
-          <h2>Login</h2>
+          <h3>Verify with OTP</h3>
           <form
             class="row login_form"
-            action="/loginPost"
+            action="/verify"
             method="post"
             id="contactForm"
             novalidate="novalidate"
@@ -49,32 +46,18 @@
                 class="form-control"
                 style="background-color: white"
                 id="name"
-                name="email"
-                placeholder="Enter your Email"
+                name="otp"
+                placeholder="Enter OTP"
                 onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Enter your Email'"
+                onblur="this.placeholder = 'Enter OTP'"
               />
             </div>
-            <div class="col-md-12 form-group">
-              <input
-                type="text"
-                class="form-control"
-                style="background-color: white"
-                id="name"
-                name="password"
-                placeholder="Password"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Password'"
-              />
-            </div>
-            <div class="col-md-12 form-group">
-              <div class="text-danger"><%= msg %></div>
-            </div>
+            <div class="text-danger"><%= msg %></div>
+
             <div class="col-md-12 form-group">
               <button type="submit" value="submit" class="primary-btn">
-                Log In
+                Verify
               </button>
-              <a href="#">Forgot Password?</a>
             </div>
           </form>
         </div>

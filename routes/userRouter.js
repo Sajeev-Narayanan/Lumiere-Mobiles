@@ -6,10 +6,18 @@ const userRouter = express.Router();
 
 userRouter.use(express.static("public"));
 
+userRouter.get("/", userControllers.home);
+
 userRouter.get("/login", userControllers.loginPageGet);
 
 userRouter.get("/signup", userControllers.signupPageGet);
 
 userRouter.post("/signup", userControllers.signup);
+
+userRouter.post("/verify", userControllers.verify);
+
+userRouter.post("/loginPost", userControllers.loginPost);
+
+userRouter.get("/logout", userControllers.logout);
 
 module.exports = userRouter;

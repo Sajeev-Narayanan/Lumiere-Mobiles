@@ -38,6 +38,12 @@ const userSchema = new Schema({
     required: true,
     trim: true,
   },
+  state: {
+    type: Boolean,
+    required: true,
+    trim: true,
+  },
+  type: { type: String, required: true, trim: true },
 });
 userSchema.plugin(validator);
 const User = mongoose.model("User", userSchema);

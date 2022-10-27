@@ -10,7 +10,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
             class="d-flex flex-row justify-content-between align-items-center mb-3"
           >
             <h5 class="card-title">PRODUCTS</h5>
-            <a href="/admin/addProductGet" class="customButton-white"
+            <a href="/admin/addProduct" class="customButton-white"
               >ADD PRODUCT</a
             >
           </div>
@@ -31,42 +31,32 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                 </tr>
               </thead>
               <tbody>
+                <% let i=1; for(value of productFind){ %>
+
                 <tr>
-                  <th scope="row">1</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <!-- <td>Cell</td>
-                  <td>Cell</td> -->
+                  <th scope="row"><%= i %></th>
+                  <td><%=value.product_name%></td>
+                  <td><%=value.brand[0].brand%></td>
+                  <td><%= value.price %></td>
+                  <td><%= value.discount %>%</td>
+                  <td><%=value.category[0].category%></td>
+                  <td><%= value.description %></td>
+                  <td>
+                    <a
+                      href="/admin/editProductGet/<%= value._id %>"
+                      class="btn btn-warning"
+                      >Edit</a
+                    >
+
+                    <form
+                      action="/admin/deleteProduct/<%= value._id %>?_method=DELETE"
+                      method="post"
+                    >
+                      <button class="btn btn-danger" id="edit">Delete</button>
+                    </form>
+                  </td>
                 </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <!-- <td></td>
-                  <td></td> -->
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <!-- <td></td>
-                  <td></td> -->
-                </tr>
+                <%i++ } %>
               </tbody>
             </table>
           </div>

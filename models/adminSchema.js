@@ -16,6 +16,7 @@ const adminSchema = new Schema({
     required: true,
     trim: true,
   },
+  type: { type: String, required: true, trim: true },
 });
 adminSchema.plugin(validator);
 const Admin = mongoose.model("Admin", adminSchema);
