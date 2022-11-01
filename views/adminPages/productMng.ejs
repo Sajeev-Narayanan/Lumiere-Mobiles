@@ -32,6 +32,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
               </thead>
               <tbody>
                 <% let i=1; for(value of productFind){ %>
+                  <% if(value.deleted== false){ %> 
 
                 <tr>
                   <th scope="row"><%= i %></th>
@@ -44,7 +45,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   <td>
                     <a
                       href="/admin/editProductGet/<%= value._id %>"
-                      class="btn btn-warning"
+                      class="btn btn-warning mb-3"
                       >Edit</a
                     >
 
@@ -56,6 +57,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                     </form>
                   </td>
                 </tr>
+                <% } %> 
                 <%i++ } %>
               </tbody>
             </table>

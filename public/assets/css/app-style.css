@@ -793,6 +793,14 @@ body.bg-theme15 {
 
 /*Cards */
 .card {
+  
+  margin-bottom: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.card2 {
+  margin-top: 300px;
   margin-bottom: 25px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border: none;

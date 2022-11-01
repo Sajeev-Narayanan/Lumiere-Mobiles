@@ -55,42 +55,17 @@
               <ul
                 class="nav navbar-nav menu_nav ml-auto d-flex flex-row align-items-center justify-content-end"
               >
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item submenu dropdown">
                   <a
-                    href="#"
-                    class="nav-link dropdown-toggle"
-                    data-toggle="dropdown"
-                    role="button"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    >Shop</a
+                    href="/mobile"
+                    class="nav-link "
+                  
+                    >Mobiles</a
                   >
-                  <ul class="dropdown-menu">
-                    <li class="nav-item">
-                      <a class="nav-link" href="category.html">Shop Category</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="single-product.html"
-                        >Product Details</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="checkout.html"
-                        >Product Checkout</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="cart.html">Shopping Cart</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="confirmation.html"
-                        >Confirmation</a
-                      >
-                    </li>
-                  </ul>
+                  
                 </li>
                 <li class="nav-item submenu dropdown">
                   <a
@@ -128,17 +103,23 @@
                       <a class="nav-link" href="/login">Login</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="tracking.html">Profile</a>
+                      <a class="nav-link" href="/profile">Profile</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="/logout">Logout</a>
                     </li>
                   </ul>
                 </li>
+                <li >
+                  <a href="/wishList" class="heart"> <span class="ti-heart"></span></a>
+                 
+                </li>
+                
               </ul>
               <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item"></li>
                 <li class="nav-item">
-                  <a href="#" class="cart"><span class="ti-bag"></span></a>
+                  <a href="/cart" class="cart"><span class="ti-bag"></span></a>
                 </li>
 
                 <li class="nav-item">
@@ -363,6 +344,7 @@
     </footer>
 
     <script src="/index.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
       integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

@@ -18,6 +18,7 @@ const flash = require("connect-flash");
 
 const methodOverride = require("method-override");
 const nodemailer = require("nodemailer");
+const Swal = require('sweetalert2')
 
 // const multer = require("multer");
 // const upload = multer({ dest: "" });
@@ -87,7 +88,7 @@ app.use((req, res, next) => {
 });
 
 app.get("*", (req, res, next) => {
-  res.render("pageNotFound.ejs").status(404);
+  res.render("pageNotFound.ejs");
 });
 
 app.listen(5000, () => {

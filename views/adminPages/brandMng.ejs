@@ -75,10 +75,10 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
       </div>
       <div class="modal-body modal-body-2">
         <form action="/admin/addBrand" method="post">
-          <input type="text" name="brand" class="form-control-2" />
+          <input type="text" name="brand" class="form-control-2" required/>
 
           <button type="submit" class="btn btn-outline-primary">
-            Save changes
+            Add Brand
           </button>
         </form>
       </div>

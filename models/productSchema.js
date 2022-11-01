@@ -10,7 +10,7 @@ const ImageSchema = new Schema({
 });
 
 ImageSchema.virtual("thumbnail").get(function () {
-  return this.url.replace("/upload", "/upload/w_100");
+  return this.url.replace("/upload", "/upload/w_100/");
 });
 const opts = { toJSON: { virtuals: true } };
 const productSchema = new Schema(
@@ -28,6 +28,8 @@ const productSchema = new Schema(
     battery: { type: Number, trim: true },
     price: { type: Number, trim: true },
     discount: { type: Number, trim: true },
+    finalPrice:{type:Number,trim:true},
+    deleted:{type:Boolean,trim:true},
     description: {
       type: String,
 

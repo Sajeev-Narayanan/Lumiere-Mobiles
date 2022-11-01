@@ -77,9 +77,9 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label form-control-label"
-                  >Price</label
+                  >MRP</label
                 >
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                   <input
                     class="form-control"
                     type="text"
@@ -90,12 +90,23 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                 <label class="col-lg-1 col-form-label form-control-label"
                   >Discount (%)</label
                 >
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                   <input
                     class="form-control"
                     type="text"
                     value=""
                     name="discount"
+                  />
+                </div>
+                <label class="col-lg-1 col-form-label form-control-label"
+                  >Price</label
+                >
+                <div class="col-lg-2">
+                  <input
+                    class="form-control"
+                    type="text"
+                    value=""
+                    name="finalPrice"
                   />
                 </div>
               </div>
@@ -129,6 +140,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   />
                 </div>
               </div>
+              <input type="text" name="deleted" value="false" hidden>
               <!-- <div class="form-group row">
                 <label class="col-lg-3 col-form-label form-control-label"
                   >Confirm password</label
@@ -152,7 +164,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                     class="btn btn-secondary"
                     value="Cancel"
                   />
-                  <input type="submit" class="btn btn-primary" value="Save" />
+                  <input type="submit" class="btn btn-primary" value="Save Product" />
                 </div>
               </div>
             </form>

@@ -57,6 +57,7 @@ const showUser = async (req, res) => {
 };
 const userState = async (req, res) => {
   const { id } = req.params;
+  
   await User.findByIdAndUpdate(id, { state: false });
   res.redirect("/admin/showUser");
 };
@@ -108,7 +109,9 @@ const addProductPost = async (req, res) => {
     battery,
     price,
     discount,
+    finalPrice,
     description,
+    deleted,
   } = req.body;
 
   const product = new Product({
@@ -120,7 +123,9 @@ const addProductPost = async (req, res) => {
     battery,
     price,
     discount,
+    finalPrice,
     description,
+    deleted,
   });
 
   product.image = req.files.map((f) => ({ url: f.path, filename: f.filename }));
@@ -137,7 +142,8 @@ const deleteProduct = async (req, res) => {
   const productId = req.params._id;
   // console.log(userId);
   try {
-    await Product.findByIdAndDelete(productId);
+    // await Product.findByIdAndDelete(productId);
+    await Product.findByIdAndUpdate(productId,{deleted:true})
     res.redirect("/admin/showProduct");
   } catch (error) {}
 };
@@ -203,6 +209,7 @@ const editProductEdit = async (req, res) => {
     battery,
     price,
     discount,
+    finalPrice,
     description,
   } = req.body;
 
@@ -216,6 +223,7 @@ const editProductEdit = async (req, res) => {
       battery,
       price,
       discount,
+      finalPrice,
       description,
     });
 
