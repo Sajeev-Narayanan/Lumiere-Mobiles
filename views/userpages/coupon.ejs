@@ -1,0 +1,72 @@
+<% layout('./layout/boilerplate') %>
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Coupons</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="/checkout">Checkout<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="/couponPage">Coupon</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<% if(coupon.length>0){ %> 
+    <section class="lattest-product-area pb-40 category-list container-fluid col-12 d-flex justify-content-center">
+        <div class="col-lg-6 col-sm-6 col-md-6">
+        <div class="row">
+            <!-- single product -->
+            <% for( coupons of coupon){ %> 
+               
+
+            <div class="" >
+                <div class="addressPanel">
+                    
+                    
+                    
+                    <div class="">
+                        <h3 style="font-weight: 700;"><%= coupons.couponCode %> </h3> use this code
+                        <!-- <div class="price"> -->
+                            <h6><%= coupons.discount %>% of discount avilable</h6>
+                            <h6>expire on <span style="font-weight: 700;"><%= coupons.expiryDate.toDateString() %> </span></h6>
+                            <p><b>NB : </b>maximum amount <%= coupons.maxAmount %> </p>
+                            
+                        <!-- </div> -->
+                        
+                    </div>
+                </div>
+            </div>
+            <% } %> 
+            <!-- single product -->
+            
+        </div>
+    </div>
+    </section>
+    <% }else{ %> 
+        <section class="cart_area">
+            <div class="container">
+              <div class="cart_inner ">
+                <div class="col-12 row">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+        
+                  <img src="img/Wishlist.gif" alt="cart empty">
+                </div>
+                
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                  <a href="/mobile" class="primary-btn">Continue Shopping</a>
+                </div>
+              </div>
+                </div>
+                </div>
+                </section>
+        <% } %> 
+    <!-- End Best Seller -->
+    <!-- Start Filter Bar -->
+   
+    <!-- End Filter Bar -->
+</div>
+</div>
+</div>

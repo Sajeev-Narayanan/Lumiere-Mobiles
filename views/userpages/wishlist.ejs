@@ -1,96 +1,140 @@
 <% layout('./layout/boilerplate') %>
 
-<section class="banner-area organic-breadcrumb">
-    <div class="container">
-        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-            <div class="col-first">
-                <h1>Wishlist</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="/mobile">Wishlist</a>
-                    
-                </nav>
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Wishlist</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="/mobile">Wishlist</a>
+
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- End Banner Area -->
+    </section>
+    <!-- End Banner Area -->
 
-            <!-- Start Best Seller -->
-            <section class="lattest-product-area pb-40 category-list container-fluid col-12 d-flex justify-content-center">
-                <div class="col-lg-6 col-sm-6 col-md-6">
+    <!-- Start Best Seller -->
+    <% if(wished.length>0){ %>
+        <section class="lattest-product-area pb-40 category-list container-fluid col-12 d-flex justify-content-center">
+            <div class="col-lg-6 col-sm-6 col-md-6">
                 <div class="row">
                     <!-- single product -->
-                    <% for( product of wished){ %> 
-                        <% for(products of product.products){ %> 
+                    <% for( product of wished){ %>
+                        <% for(products of product.products){ %>
 
-                    <div class="col-lg-4 col-sm-6" id="div<%= products._id %>">
-                        <div class="single-product">
-                            
-                            
-                            <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: contain;background-repeat: no-repeat;"></div>
-                            <div class="product-details">
-                                <h6><%= products.product_name %> </h6>
-                                <div class="price">
-                                    <h6>₹ <%= products.finalPrice %> </h6>
-                                    <h6 class="l-through">₹ <%= products.price %> </h6>
-                                </div>
-                                <div class="prd-bottom">
+                            <div class="col-lg-4 col-sm-6" id="div<%= products._id %>">
+                                <div class="single-product">
 
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
+                                    <a href="/product?id=<%= products._id %>">
+                                        <div
+                                            style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: contain;background-repeat: no-repeat;">
+                                        </div>
                                     </a>
-                                    <a class="social-info" onclick="wishlist('<%= products._id %>')">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    
-                                    
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
+                                    <div class="product-details">
+                                        <h6>
+                                            <%= products.product_name %>
+                                        </h6>
+                                        <div class="price">
+                                            <h6>₹ <%= products.finalPrice %>
+                                            </h6>
+                                            <h6 class="l-through">₹ <%= products.price %>
+                                            </h6>
+                                        </div>
+                                        <div class="prd-bottom">
+
+                                            <a onclick="cart('<%= products._id %>')" class="social-info">
+                                                <span class="ti-bag"></span>
+                                                <p class="hover-text">add to bag</p>
+                                            </a>
+                                            <a class="social-info" onclick="wishlist('<%= products._id %>')">
+                                                <span class="lnr lnr-heart"></span>
+                                                <p class="hover-text">Wishlist</p>
+                                            </a>
+
+
+                                            <a href="/product?id=<%= products._id %>" class="social-info">
+                                                <span class="lnr lnr-move"></span>
+                                                <p class="hover-text">view more</p>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <% }} %>
+                                <!-- single product -->
+
+                </div>
+            </div>
+        </section>
+        <% }else{ %>
+            <section class="cart_area">
+                <div class="container">
+                    <div class="cart_inner ">
+                        <div class="col-12 row">
+                            <div class="col-12 d-flex justify-content-center align-items-center">
+
+                                <img src="img/Wishlist.gif" alt="cart empty">
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-center align-items-center">
+                                <a href="/mobile" class="primary-btn mt-5">Continue Shopping</a>
                             </div>
                         </div>
                     </div>
-                    <% }} %> 
-                    <!-- single product -->
-                    
                 </div>
-            </div>
             </section>
-            <!-- End Best Seller -->
-            <!-- Start Filter Bar -->
-           
-            <!-- End Filter Bar -->
-        </div>
-    </div>
-</div>
+            <% } %>
+                <!-- End Best Seller -->
+                <!-- Start Filter Bar -->
 
-<!-- Start related-product Area -->
+                <!-- End Filter Bar -->
+                </div>
+                </div>
+                </div>
 
-<!-- End related-product Area -->
-<script>
-    
-    function wishlist(productId){
-        let pid = String(productId)
-        const id = document.getElementById("div"+pid)
-      
-        fetch("/wishlistDelete",{
-            method:"post",
-            headers:{ 'Content-Type': 'application/json'},
-            body: JSON.stringify({ productId }) 
-        }).then(res =>res.json()).then(data=>{
-            
-            if(data.login == true){
-              
-               id.remove()
-               
+                <!-- Start related-product Area -->
 
-               
-            }
-        })
-    }
-</script>
+                <!-- End related-product Area -->
+                <script>
+
+                    function wishlist(productId) {
+                        let pid = String(productId)
+                        const id = document.getElementById("div" + pid)
+
+                        fetch("/wishlistDelete", {
+                            method: "post",
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ productId })
+                        }).then(res => res.json()).then(data => {
+
+                            if (data.login == true) {
+
+                                id.remove()
+
+
+
+                            }
+                        })
+                    }
+                </script>
+                <script>
+                    function cart(productId) {
+
+                        fetch("/cartAdd", {
+                            method: "post",
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ productId })
+                        }).then(res => res.json()).then(data => {
+
+                            if (data.login == false && data.stock.stock == 0) {
+
+                                swal("Out Of Stock!");
+                            } else if (data.login == false) {
+                                window.location = "/login";
+                            }
+                        })
+                    }
+                </script>

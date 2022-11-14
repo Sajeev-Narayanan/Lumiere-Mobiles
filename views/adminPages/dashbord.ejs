@@ -4,78 +4,71 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
 <div class="clearfix"></div>
 
 <div class="content-wrapper">
-  <div class="container-fluid">
+  <div class="container-fluid html-content">
+    <button class="customButton-white" onclick="CreatePDFfromHTML()">Download PDF</button>
     <!--Start Dashboard Content-->
 
-    <div class="card mt-3">
+    <div class="card3 mt-3" id="card">
       <div class="card-content">
         <div class="row row-group m-0">
           <div class="col-12 col-lg-6 col-xl-3 border-light">
             <div class="card-body">
-              <h5 class="text-white mb-0">
-                9526
+              <h3 class="text-white mb-0">
+                <%= orders.length %> 
                 <span class="float-right"
                   ><i class="fa fa-shopping-cart"></i
                 ></span>
-              </h5>
-              <div class="progress my-3" style="height: 3px">
-                <div class="progress-bar" style="width: 55%"></div>
+              </h3>
+              <div class=" my-5" >
+                
               </div>
-              <p class="mb-0 text-white small-font">
+              <h4 class="mb-0 text-white small-font">
                 Total Orders
-                <span class="float-right"
-                  >+4.2% <i class="zmdi zmdi-long-arrow-up"></i
-                ></span>
-              </p>
+                
+              </h4>
             </div>
           </div>
           <div class="col-12 col-lg-6 col-xl-3 border-light">
             <div class="card-body">
-              <h5 class="text-white mb-0">
-                8323 <span class="float-right"><i class="fa fa-usd"></i></span>
-              </h5>
-              <div class="progress my-3" style="height: 3px">
-                <div class="progress-bar" style="width: 55%"></div>
+              <h3 class="text-white mb-0">
+                <%= revenue %>  <span class="float-right"><i class="fa fa-inr"></i></span>
+              </h3>
+              <div class=" my-5">
+                
               </div>
-              <p class="mb-0 text-white small-font">
+              <h4 class="mb-0 text-white small-font">
                 Total Revenue
-                <span class="float-right"
-                  >+1.2% <i class="zmdi zmdi-long-arrow-up"></i
-                ></span>
-              </p>
+                
+              </h4>
             </div>
           </div>
           <div class="col-12 col-lg-6 col-xl-3 border-light">
             <div class="card-body">
-              <h5 class="text-white mb-0">
-                6200 <span class="float-right"><i class="fa fa-eye"></i></span>
-              </h5>
-              <div class="progress my-3" style="height: 3px">
-                <div class="progress-bar" style="width: 55%"></div>
+              <h3 class="text-white mb-0">
+                <%= users.length %>  <span class="float-right"><i class="fa fa-eye"></i></span>
+              </h3>
+              <div class=" my-5">
+                
               </div>
-              <p class="mb-0 text-white small-font">
-                Visitors
-                <span class="float-right"
-                  >+5.2% <i class="zmdi zmdi-long-arrow-up"></i
-                ></span>
-              </p>
+              <h4 class="mb-0 text-white small-font">
+                Total Users
+                
+              </h4>
             </div>
           </div>
           <div class="col-12 col-lg-6 col-xl-3 border-light">
             <div class="card-body">
-              <h5 class="text-white mb-0">
-                5630
+              <h3 class="text-white mb-0">
+                <%= delivered %> 
                 <span class="float-right"><i class="fa fa-envira"></i></span>
-              </h5>
-              <div class="progress my-3" style="height: 3px">
-                <div class="progress-bar" style="width: 55%"></div>
+              </h3>
+              <div class=" my-5">
+                
               </div>
-              <p class="mb-0 text-white small-font">
-                Messages
-                <span class="float-right"
-                  >+2.2% <i class="zmdi zmdi-long-arrow-up"></i
-                ></span>
-              </p>
+              <h4 class="mb-0 text-white small-font">
+                Compleated Orders
+               
+              </h4>
             </div>
           </div>
         </div>
@@ -84,107 +77,39 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
 
     <div class="row">
       <div class="col-12 col-lg-8 col-xl-8">
-        <div class="card">
+        <div class="card3" id="card2">
           <div class="card-header">
-            Site Traffic
+            Sales Report
             <div class="card-action">
-              <div class="dropdown">
-                <a
-                  href="javascript:void();"
-                  class="dropdown-toggle dropdown-toggle-nocaret"
-                  data-toggle="dropdown"
-                >
-                  <i class="icon-options"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="javascript:void();">Action</a>
-                  <a class="dropdown-item" href="javascript:void();"
-                    >Another action</a
-                  >
-                  <a class="dropdown-item" href="javascript:void();"
-                    >Something else here</a
-                  >
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="javascript:void();"
-                    >Separated link</a
-                  >
-                </div>
-              </div>
+              
             </div>
           </div>
           <div class="card-body">
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                <i class="fa fa-circle mr-2 text-white"></i>New Visitor
-              </li>
-              <li class="list-inline-item">
-                <i class="fa fa-circle mr-2 text-light"></i>Old Visitor
-              </li>
-            </ul>
+            <input type="text" id="jan" value="<%= jan %>" hidden>
+            <input type="text" id="feb" value="<%= feb %>" hidden>
+            <input type="text" id="mar" value="<%= mar %>" hidden>
+            <input type="text" id="apr" value="<%= apr %>" hidden>
+            <input type="text" id="may" value="<%= may %>" hidden>
+            <input type="text" id="jun" value="<%= jun %>" hidden>
+            <input type="text" id="jul" value="<%= jul %>" hidden>
+            <input type="text" id="aug" value="<%= aug %>" hidden>
+            <input type="text" id="sep" value="<%= sep %>" hidden>
+            <input type="text" id="oct" value="<%= oct %>" hidden>
+            <input type="text" id="nov" value="<%= nov %>" hidden>
+            <input type="text" id="dec" value="<%= dec %>" hidden>
             <div class="chart-container-1">
               <canvas id="chart1"></canvas>
-            </div>
-          </div>
-
-          <div class="row m-0 row-group text-center border-top border-light-3">
-            <div class="col-12 col-lg-4">
-              <div class="p-3">
-                <h5 class="mb-0">45.87M</h5>
-                <small class="mb-0"
-                  >Overall Visitor
-                  <span> <i class="fa fa-arrow-up"></i> 2.43%</span></small
-                >
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="p-3">
-                <h5 class="mb-0">15:48</h5>
-                <small class="mb-0"
-                  >Visitor Duration
-                  <span> <i class="fa fa-arrow-up"></i> 12.65%</span></small
-                >
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="p-3">
-                <h5 class="mb-0">245.65</h5>
-                <small class="mb-0"
-                  >Pages/Visit
-                  <span> <i class="fa fa-arrow-up"></i> 5.62%</span></small
-                >
-              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div class="col-12 col-lg-4 col-xl-4">
-        <div class="card">
+        <div class="card3" id="card3">
           <div class="card-header">
-            Weekly sales
+            Order Status
             <div class="card-action">
-              <div class="dropdown">
-                <a
-                  href="javascript:void();"
-                  class="dropdown-toggle dropdown-toggle-nocaret"
-                  data-toggle="dropdown"
-                >
-                  <i class="icon-options"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="javascript:void();">Action</a>
-                  <a class="dropdown-item" href="javascript:void();"
-                    >Another action</a
-                  >
-                  <a class="dropdown-item" href="javascript:void();"
-                    >Something else here</a
-                  >
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="javascript:void();"
-                    >Separated link</a
-                  >
-                </div>
-              </div>
+             
             </div>
           </div>
           <div class="card-body">
@@ -196,26 +121,26 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
             <table class="table align-items-center">
               <tbody>
                 <tr>
-                  <td><i class="fa fa-circle text-white mr-2"></i> Direct</td>
-                  <td>$5856</td>
-                  <td>+55%</td>
+                  <td><i class="fa fa-circle text-white mr-2"></i> Ordered</td>
+                  <td id="ordered"><%= ordered %> </td>
+                  
                 </tr>
                 <tr>
                   <td>
-                    <i class="fa fa-circle text-light-1 mr-2"></i>Affiliate
+                    <i class="fa fa-circle text-light-1 mr-2"></i>Packed
                   </td>
-                  <td>$2602</td>
-                  <td>+25%</td>
+                  <td id="packed"><%= packed %> </td>
+                 
                 </tr>
                 <tr>
-                  <td><i class="fa fa-circle text-light-2 mr-2"></i>E-mail</td>
-                  <td>$1802</td>
-                  <td>+15%</td>
+                  <td><i class="fa fa-circle text-light-2 mr-2"></i>Shipped</td>
+                  <td id="shipped"><%= shipped %></td>
+                  
                 </tr>
                 <tr>
-                  <td><i class="fa fa-circle text-light-3 mr-2"></i>Other</td>
-                  <td>$1105</td>
-                  <td>+5%</td>
+                  <td><i class="fa fa-circle text-light-3 mr-2"></i>Cancelled</td>
+                  <td id="cancelled"><%= cancelled %> </td>
+                  
                 </tr>
               </tbody>
             </table>
@@ -225,194 +150,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
     </div>
     <!--End Row-->
 
-    <div class="row">
-      <div class="col-12 col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            Recent Order Tables
-            <div class="card-action">
-              <div class="dropdown">
-                <a
-                  href="javascript:void();"
-                  class="dropdown-toggle dropdown-toggle-nocaret"
-                  data-toggle="dropdown"
-                >
-                  <i class="icon-options"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="javascript:void();">Action</a>
-                  <a class="dropdown-item" href="javascript:void();"
-                    >Another action</a
-                  >
-                  <a class="dropdown-item" href="javascript:void();"
-                    >Something else here</a
-                  >
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="javascript:void();"
-                    >Separated link</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="table-responsive">
-            <table
-              class="table align-items-center table-flush table-borderless"
-            >
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Photo</th>
-                  <th>Product ID</th>
-                  <th>Amount</th>
-                  <th>Date</th>
-                  <th>Shipping</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Iphone 5</td>
-                  <td>
-                    <img
-                      src="https://via.placeholder.com/110x110"
-                      class="product-img"
-                      alt="product img"
-                    />
-                  </td>
-                  <td>#9405822</td>
-                  <td>$ 1250.00</td>
-                  <td>03 Aug 2017</td>
-                  <td>
-                    <div class="progress shadow" style="height: 3px">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style="width: 90%"
-                      ></div>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Earphone GL</td>
-                  <td>
-                    <img
-                      src="https://via.placeholder.com/110x110"
-                      class="product-img"
-                      alt="product img"
-                    />
-                  </td>
-                  <td>#9405820</td>
-                  <td>$ 1500.00</td>
-                  <td>03 Aug 2017</td>
-                  <td>
-                    <div class="progress shadow" style="height: 3px">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style="width: 60%"
-                      ></div>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>HD Hand Camera</td>
-                  <td>
-                    <img
-                      src="https://via.placeholder.com/110x110"
-                      class="product-img"
-                      alt="product img"
-                    />
-                  </td>
-                  <td>#9405830</td>
-                  <td>$ 1400.00</td>
-                  <td>03 Aug 2017</td>
-                  <td>
-                    <div class="progress shadow" style="height: 3px">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style="width: 70%"
-                      ></div>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Clasic Shoes</td>
-                  <td>
-                    <img
-                      src="https://via.placeholder.com/110x110"
-                      class="product-img"
-                      alt="product img"
-                    />
-                  </td>
-                  <td>#9405825</td>
-                  <td>$ 1200.00</td>
-                  <td>03 Aug 2017</td>
-                  <td>
-                    <div class="progress shadow" style="height: 3px">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style="width: 100%"
-                      ></div>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Hand Watch</td>
-                  <td>
-                    <img
-                      src="https://via.placeholder.com/110x110"
-                      class="product-img"
-                      alt="product img"
-                    />
-                  </td>
-                  <td>#9405840</td>
-                  <td>$ 1800.00</td>
-                  <td>03 Aug 2017</td>
-                  <td>
-                    <div class="progress shadow" style="height: 3px">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style="width: 40%"
-                      ></div>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Clasic Shoes</td>
-                  <td>
-                    <img
-                      src="https://via.placeholder.com/110x110"
-                      class="product-img"
-                      alt="product img"
-                    />
-                  </td>
-                  <td>#9405825</td>
-                  <td>$ 1200.00</td>
-                  <td>03 Aug 2017</td>
-                  <td>
-                    <div class="progress shadow" style="height: 3px">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style="width: 100%"
-                      ></div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+   
     <!--End Row-->
 
     <!--End Dashboard Content-->
@@ -429,3 +167,38 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
   ><i class="fa fa-angle-double-up"></i>
 </a>
 <!--End Back To Top Button-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+<script>
+  //Create PDf from HTML...
+function CreatePDFfromHTML() {
+    var HTML_Width = $(".html-content").width();
+    var HTML_Height = $(".html-content").height();
+    var top_left_margin = 15;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    var canvas_image_width = HTML_Width;
+    var canvas_image_height = HTML_Height;
+
+    var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+    // document.getElementById("card").style.background="black"
+    // document.getElementById("card2").style.background="black"
+    // document.getElementById("card3").style.background="black"
+
+    html2canvas($(".html-content")[0]).then(function (canvas) {
+        var imgData = canvas.toDataURL("image/jpeg", 1.0);
+        var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+        for (var i = 1; i <= totalPDFPages; i++) { 
+            pdf.addPage(PDF_Width, PDF_Height);
+            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+        }
+        pdf.save("Your_PDF_Name.pdf");
+        // $(".html-content").hide();
+    //     document.getElementById("card").style.background=rgba(0, 0, 0, 0.2);
+    // document.getElementById("card2").style.background=rgba(0, 0, 0, 0.2);
+    // document.getElementById("card3").style.background=rgba(0, 0, 0, 0.2);
+    });
+    
+}
+</script>

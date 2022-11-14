@@ -5,49 +5,24 @@
       <div class="col-lg-12">
         <div class="active-banner-slider owl-carousel">
           <!-- single-slide -->
+          <% for(data of banner){ %> 
           <div class="row single-slide align-items-center d-flex">
             <div class="col-lg-5 col-md-6">
               <div class="banner-content">
-                <h1>iPhone 14 Pro Max</h1>
+                <h1><%= data.name %> </h1>
 
-                <div class="add-bag d-flex align-items-center">
-                  <a class="add-btn" href=""
-                    ><span class="lnr lnr-cross"></span
-                  ></a>
-                  <span class="add-text text-uppercase">Add to Bag</span>
-                </div>
+                
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="banner-img">
-                <img class="img-fluid" src="img/banner/banner-img.png" alt="" />
+            <div class="col-sm-6">
+              <div class="">
+                <div style="background-image: url('<%= data.image[0].url %>');width: 450px; height: 520px;background-size: contain;background-repeat: no-repeat;"></div>
+                
               </div>
             </div>
           </div>
-          <!-- single-slide -->
-          <div class="row single-slide">
-            <div class="col-lg-6">
-              <div class="banner-content">
-                <h1>SAMSUNG Galaxy Note 10 Plus</h1>
-
-                <div class="add-bag d-flex align-items-center">
-                  <a class="add-btn" href=""
-                    ><span class="lnr lnr-cross"></span
-                  ></a>
-                  <span class="add-text text-uppercase">Add to Bag</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="banner-img">
-                <img
-                  class="img-fluid"
-                  src="img/banner/banner-img2.png"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
+          <% } %> 
+         
         </div>
       </div>
     </div>
@@ -69,15 +44,17 @@
         <% for(products of product){ %> 
         <div class="col-lg-3 col-md-6">
           <div class="single-product">
+            <a href="/product?id=<%= products._id %>">
             <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: contain;background-repeat: no-repeat;"></div>
-            <div class="product-details">
+          </a>
+            <div class="product-details mt-3">
               <h6><%= products.product_name %></h6>
               <div class="price">
                 <h6>₹ <%= products.finalPrice %></h6>
                 <h6 class="l-through">₹ <%= products.price %></h6>
               </div>
               <div class="prd-bottom">
-                <a href="" class="social-info">
+                <a  onclick="cart('<%= products._id %>')" class="social-info">
                   <span class="ti-bag"></span>
                   <p class="hover-text">add to bag</p>
                 </a>
@@ -85,11 +62,8 @@
                                         <span class="lnr lnr-heart"></span>
                                         <p class="hover-text">Wishlist</p>
                                     </a>
-                <a href="" class="social-info">
-                  <span class="lnr lnr-sync"></span>
-                  <p class="hover-text">compare</p>
-                </a>
-                <a href="" class="social-info">
+                
+                <a href="/product?id=<%= products._id %>" class="social-info">
                   <span class="lnr lnr-move"></span>
                   <p class="hover-text">view more</p>
                 </a>
@@ -118,15 +92,17 @@
         <% for(products of product){ %> 
         <div class="col-lg-3 col-md-6">
           <div class="single-product">
+            <a href="/product?id=<%= products._id %>">
             <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: contain;background-repeat: no-repeat;"></div>
-            <div class="product-details">
+          </a>
+            <div class="product-details mt-3">
               <h6><%= products.product_name %></h6>
               <div class="price">
                 <h6>₹ <%= products.finalPrice %></h6>
                 <h6 class="l-through">₹ <%= products.price %></h6>
               </div>
               <div class="prd-bottom">
-                <a href="" class="social-info">
+                <a  onclick="cart('<%= products._id %>')" class="social-info">
                   <span class="ti-bag"></span>
                   <p class="hover-text">add to bag</p>
                 </a>
@@ -134,11 +110,8 @@
                   <span class="lnr lnr-heart"></span>
                   <p class="hover-text">Wishlist</p>
               </a>
-                <a href="" class="social-info">
-                  <span class="lnr lnr-sync"></span>
-                  <p class="hover-text">compare</p>
-                </a>
-                <a href="" class="social-info">
+                
+                <a href="/product?id=<%= products._id %>" class="social-info">
                   <span class="lnr lnr-move"></span>
                   <p class="hover-text">view more</p>
                 </a>
@@ -240,6 +213,24 @@
           
           if(data.login == false){
              
+              window.location = "/login";
+          }
+      })
+  }
+</script>
+<script>
+  function cart(productId){
+     
+      fetch("/cartAdd",{
+          method:"post",
+          headers:{ 'Content-Type': 'application/json'},
+          body: JSON.stringify({ productId})
+      }).then(res =>res.json()).then(data=>{
+          
+          if(data.login == false && data.stock.stock == 0 ){
+             
+              swal("Out Of Stock!");
+          }else if(data.login == false){
               window.location = "/login";
           }
       })

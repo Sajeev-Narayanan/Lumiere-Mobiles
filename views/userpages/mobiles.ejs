@@ -117,12 +117,12 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="single-product">
                             
-                         <a href="/product/<%= products._id %> ">
+                         <a href="/product?id=<%= products._id %>">
                             <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;
                             background-size: contain;background-repeat: no-repeat;"></div>
                         </a>
 
-                            <div class="product-details">
+                            <div class="product-details mt-3">
                                 <h6><%= products.product_name %> </h6>
                                 <div class="price">
                                     <h6>₹ <%= products.finalPrice %> </h6>
@@ -130,7 +130,7 @@
                                 </div>
                                 <div class="prd-bottom">
 
-                                    <a class="social-info">
+                                    <a class="social-info" onclick="cart('<%= products._id %>')">
                                         <span class="ti-bag"></span>
                                         <p class="hover-text">add to bag</p>
                                     </a>
@@ -139,7 +139,7 @@
                                         <p class="hover-text">Wishlist</p>
                                     </a>
                                
-                                    <a href="" class="social-info">
+                                    <a href="/product?id=<%= products._id %>" class="social-info">
                                         <span class="lnr lnr-move"></span>
                                         <p class="hover-text">view more</p>
                                     </a>
@@ -160,6 +160,7 @@
     </div>
 </div>
 
+
 <!-- Start related-product Area -->
 
 <!-- End related-product Area -->
@@ -173,6 +174,25 @@
             
             if(data.login == false){
                
+                window.location = "/login";
+            }
+        })
+    }
+</script>
+
+<script>
+    function cart(productId){
+       
+        fetch("/cartAdd",{
+            method:"post",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify({ productId})
+        }).then(res =>res.json()).then(data=>{
+            
+            if(data.login == false && data.stock.stock == 0 ){
+               
+                swal("Out Of Stock!");
+            }else if(data.login == false){
                 window.location = "/login";
             }
         })

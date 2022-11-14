@@ -1,6 +1,7 @@
 const express = require("express");
 const { check } = require("express-validator");
 const userControllers = require("../controllers/userControllers");
+const auth = require("../middleware/auth");
 const Swal = require('sweetalert2')
 
 const userRouter = express.Router();
@@ -19,7 +20,7 @@ userRouter.post("/verify", userControllers.verify);
 
 userRouter.post("/loginPost", userControllers.loginPost);
 
-userRouter.get("/logout", userControllers.logout);
+userRouter.get("/logout",auth.sessionCheckuzUser, userControllers.logout);
 
 userRouter.get("/cart", userControllers.cart);
 
@@ -45,6 +46,26 @@ userRouter.get("/changePassword",userControllers.changePassword);
 
 userRouter.post("/changePasswordPost",userControllers.changePasswordPost);
 
-userRouter.get("/product/:id",userControllers.product);
+userRouter.get("/product",userControllers.product);
+
+userRouter.post("/cartAdd",userControllers.cartAdd);
+
+userRouter.post("/quantityChange",userControllers.quantityChange);
+
+userRouter.post("/cartDelete",userControllers.cartDelete);
+
+userRouter.get("/checkout",userControllers.checkout);
+
+userRouter.post("/confirm",userControllers.confirm);
+
+userRouter.post("/payverify",userControllers.payverify);
+
+userRouter.get("/MyOrder",userControllers.MyOrder);
+
+userRouter.get("/MyOrder",userControllers.MyOrder);
+
+userRouter.get("/orders",userControllers.orders);
+
+userRouter.get("/couponPage",userControllers.couponPage);
 
 module.exports = userRouter;

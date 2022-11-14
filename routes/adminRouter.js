@@ -2,6 +2,7 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const adminControllers = require("../controllers/adminControllers");
+const auth = require("../middleware/auth");
 const multer = require("multer");
 const { storage } = require("../cloudinary");
 const upload = multer({ storage });
@@ -10,34 +11,42 @@ const adminRouter = express.Router();
 
 adminRouter.use(express.static("public"));
 
-adminRouter.get("/", adminControllers.signinPage);
-adminRouter.post("/", adminControllers.signin);
-adminRouter.get("/dashboard", adminControllers.dashboard);
-adminRouter.get("/logout", adminControllers.logout);
-adminRouter.get("/showorder", adminControllers.showorder);
-adminRouter.get("/showUser", adminControllers.showUser);
-adminRouter.get("/userState/:id", adminControllers.userState);
-adminRouter.get("/userStateUn/:id", adminControllers.userStateUn);
-adminRouter.get("/showProduct", adminControllers.showProduct);
-// adminRouter.get("/addProductGet", adminControllers.addProductGet);
-// adminRouter.post("/addProductPost", adminControllers.addProductPost);
+adminRouter.get("/",auth.sessionCheckAdminLogin, adminControllers.signinPage);
+adminRouter.post("/",auth.sessionCheckAdminLogin, adminControllers.signin);
+adminRouter.get("/dashboard",auth.sessionCheckDashboard, adminControllers.dashboard);
+adminRouter.get("/logout",auth.sessionCheckDashboard, adminControllers.logout);
+adminRouter.get("/showorder",auth.sessionCheckDashboard, adminControllers.showorder);
+adminRouter.post("/orderstatus",auth.sessionCheckDashboard,adminControllers.orderstatus);
+adminRouter.post("/orderCancel",auth.sessionCheckDashboard,adminControllers.orderCancel);
+adminRouter.get("/showUser",auth.sessionCheckDashboard, adminControllers.showUser);
+adminRouter.get("/userState/:id",auth.sessionCheckDashboard, adminControllers.userState);
+adminRouter.get("/userStateUn/:id",auth.sessionCheckDashboard, adminControllers.userStateUn);
+adminRouter.get("/showProduct",auth.sessionCheckDashboard, adminControllers.showProduct);
+
 adminRouter
   .route("/addProduct")
-  .get(adminControllers.addProductGet)
-  .post(upload.array("image"), adminControllers.addProductPost);
+  .get(auth.sessionCheckDashboard,adminControllers.addProductGet)
+  .post(auth.sessionCheckDashboard,upload.array("image"), adminControllers.addProductPost);
 
-adminRouter.delete("/deleteProduct/:_id", adminControllers.deleteProduct);
-adminRouter.get("/editProductGet/:_id", adminControllers.editProductGet);
+adminRouter.delete("/deleteProduct/:_id",auth.sessionCheckDashboard, adminControllers.deleteProduct);
+adminRouter.get("/editProductGet/:_id",auth.sessionCheckDashboard, adminControllers.editProductGet);
 adminRouter.put(
-  "/editProductEdit/:_id",
+  "/editProductEdit/:_id",auth.sessionCheckDashboard,
   upload.array("image"),
   adminControllers.editProductEdit
 );
-adminRouter.get("/showCategory", adminControllers.showCategory);
-adminRouter.post("/addCategory", adminControllers.addCategory);
-adminRouter.get("/showBrand", adminControllers.showBrand);
-adminRouter.post("/addBrand", adminControllers.addBrand);
-adminRouter.get("/showStock", adminControllers.showStock);
-adminRouter.post("/addStock/:Id", adminControllers.addStock);
+adminRouter.get("/showCategory",auth.sessionCheckDashboard, adminControllers.showCategory);
+adminRouter.post("/addCategory",auth.sessionCheckDashboard, adminControllers.addCategory);
+adminRouter.get("/showBrand",auth.sessionCheckDashboard, adminControllers.showBrand);
+adminRouter.post("/addBrand",auth.sessionCheckDashboard, adminControllers.addBrand);
+adminRouter.get("/showStock",auth.sessionCheckDashboard, adminControllers.showStock);
+adminRouter.post("/addStock/:Id",auth.sessionCheckDashboard, adminControllers.addStock);
+adminRouter.post("/moreorder",auth.sessionCheckDashboard,adminControllers.moreorder);
+adminRouter.get("/showCoupon",auth.sessionCheckDashboard,adminControllers.showCoupon);
+adminRouter.post("/addCoupon",auth.sessionCheckDashboard,adminControllers.addCoupon);
+adminRouter.post("/compare",adminControllers.compare);
+adminRouter.get("/showBanner",auth.sessionCheckDashboard,adminControllers.showBanner);
+adminRouter.post("/addBanner",auth.sessionCheckDashboard,upload.array('image'),adminControllers.addBanner);
+
 
 module.exports = adminRouter;

@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css" />
     <link rel="stylesheet" href="css/magnific-popup.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="/profile.css">
 
     <link rel="stylesheet" href="/style.css" />
   </head>
@@ -53,7 +54,7 @@
               id="navbarSupportedContent"
             >
               <ul
-                class="nav navbar-nav menu_nav ml-auto d-flex flex-row align-items-center justify-content-end"
+                class="nav navbar-nav  menu_nav ml-auto d-flex flex-row align-items-center justify-content-end"
               >
                 <li class="nav-item">
                   <a class="nav-link" href="/">Home</a>
@@ -67,27 +68,7 @@
                   >
                   
                 </li>
-                <li class="nav-item submenu dropdown">
-                  <a
-                    href="#"
-                    class="nav-link dropdown-toggle"
-                    data-toggle="dropdown"
-                    role="button"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    >Blog</a
-                  >
-                  <ul class="dropdown-menu">
-                    <li class="nav-item">
-                      <a class="nav-link" href="blog.html">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="single-blog.html"
-                        >Blog Details</a
-                      >
-                    </li>
-                  </ul>
-                </li>
+                
                 <li class="nav-item submenu dropdown">
                   <a
                     href="#"
@@ -99,15 +80,18 @@
                     ><span class="ti-user"></span
                   ></a>
                   <ul class="dropdown-menu">
+                    <% if(email == null){ %> 
                     <li class="nav-item">
                       <a class="nav-link" href="/login">Login</a>
                     </li>
+                    <% }else{ %> 
                     <li class="nav-item">
                       <a class="nav-link" href="/profile">Profile</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="/logout">Logout</a>
                     </li>
+                    <% } %> 
                   </ul>
                 </li>
                 <li >

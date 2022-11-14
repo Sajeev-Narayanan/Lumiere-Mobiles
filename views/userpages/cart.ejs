@@ -18,6 +18,7 @@
 <!-- End Banner Area -->
 
 <!--================Cart Area =================-->
+<% if(cartDetails.length>0){ %> 
 <section class="cart_area">
   <div class="container">
     <div class="cart_inner">
@@ -32,155 +33,64 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <% for( product of cartDetails){ %> 
+              <% for(products of product.products){ %> 
+            <tr id="<%= product.cart_item.productId %>">
               <td>
                 <div class="media">
                   <div class="d-flex">
-                    <img src="img/cart.jpg" alt="" />
+                    <a href="/product?id=<%= products._id %>">
+                      <div style="background-image: url(<%=products.image[0].url%>);width: 100px;height: 150px;
+                      background-size: contain;background-repeat: no-repeat;"></div>
+                  </a>
                   </div>
                   <div class="media-body">
-                    <p>Minimalistic shop for multipurpose use</p>
+                    <p><%= products.product_name %> </p>
                   </div>
                 </div>
               </td>
               <td>
-                <h5>$360.00</h5>
+                <h5><%= products.finalPrice %></h5>
               </td>
               <td>
                 <div class="product_count">
                   <input
-                    type="text"
+                    type="number"
                     name="qty"
-                    id="sst"
-                    maxlength="12"
-                    value="1"
+                    id="sst<%= products._id %>"
+                    
+                    value="<%= product.cart_item.product_quantity %>"
                     title="Quantity:"
                     class="input-text qty"
+                    readonly
                   />
                   <button
-                    onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                  
+                    onclick="quantity('<%= products._id %>','<%= products.finalPrice %>','<%= product._id %>','1')"
                     class="increase items-count"
                     type="button"
                   >
+                  
                     <i class="lnr lnr-chevron-up"></i>
                   </button>
                   <button
-                    onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) && sst > 0 ) result.value--;return false;"
+                    onclick="quantity('<%= products._id %>','<%= products.finalPrice %>','<%= product._id %>','-1')"
                     class="reduced items-count"
                     type="button"
                   >
+                 
                     <i class="lnr lnr-chevron-down"></i>
                   </button>
                 </div>
               </td>
               <td>
-                <h5>$720.00</h5>
+                <h5 id="total<%= products._id %>"><%= product.cart_item.product_quantity * products.finalPrice %></h5>
               </td>
+              <td><a style="font-size: xx-large; cursor: pointer;" onclick="deleted('<%= product.cart_item.productId %>')">&times</a></td>
             </tr>
-            <tr>
-              <td>
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="img/cart.jpg" alt="" />
-                  </div>
-                  <div class="media-body">
-                    <p>Minimalistic shop for multipurpose use</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <h5>$360.00</h5>
-              </td>
-              <td>
-                <div class="product_count">
-                  <input
-                    type="text"
-                    name="qty"
-                    id="sst"
-                    maxlength="12"
-                    value="1"
-                    title="Quantity:"
-                    class="input-text qty"
-                  />
-                  <button
-                    onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                    class="increase items-count"
-                    type="button"
-                  >
-                    <i class="lnr lnr-chevron-up"></i>
-                  </button>
-                  <button
-                    onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) && sst > 0 ) result.value--;return false;"
-                    class="reduced items-count"
-                    type="button"
-                  >
-                    <i class="lnr lnr-chevron-down"></i>
-                  </button>
-                </div>
-              </td>
-              <td>
-                <h5>$720.00</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="img/cart.jpg" alt="" />
-                  </div>
-                  <div class="media-body">
-                    <p>Minimalistic shop for multipurpose use</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <h5>$360.00</h5>
-              </td>
-              <td>
-                <div class="product_count">
-                  <input
-                    type="text"
-                    name="qty"
-                    id="sst"
-                    maxlength="12"
-                    value="1"
-                    title="Quantity:"
-                    class="input-text qty"
-                  />
-                  <button
-                    onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                    class="increase items-count"
-                    type="button"
-                  >
-                    <i class="lnr lnr-chevron-up"></i>
-                  </button>
-                  <button
-                    onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) && sst > 0 ) result.value--;return false;"
-                    class="reduced items-count"
-                    type="button"
-                  >
-                    <i class="lnr lnr-chevron-down"></i>
-                  </button>
-                </div>
-              </td>
-              <td>
-                <h5>$720.00</h5>
-              </td>
-            </tr>
-            <tr class="bottom_button">
-              <td>
-                <a class="gray_btn" href="#">Update Cart</a>
-              </td>
-              <td></td>
-              <td></td>
-              <td>
-                <div class="cupon_text d-flex align-items-center">
-                  <input type="text" placeholder="Coupon Code" />
-                  <a class="primary-btn" href="#">Apply</a>
-                  <a class="gray_btn" href="#">Close Coupon</a>
-                </div>
-              </td>
-            </tr>
+            <% }} %> 
+            
+            
             <tr>
               <td></td>
               <td></td>
@@ -188,52 +98,18 @@
                 <h5>Subtotal</h5>
               </td>
               <td>
-                <h5>$2160.00</h5>
+                <h5 id="subtotal"><%= price %> </h5>
               </td>
             </tr>
-            <tr class="shipping_area">
-              <td></td>
-              <td></td>
-              <td>
-                <h5>Shipping</h5>
-              </td>
-              <td>
-                <div class="shipping_box">
-                  <ul class="list">
-                    <li><a href="#">Flat Rate: $5.00</a></li>
-                    <li><a href="#">Free Shipping</a></li>
-                    <li><a href="#">Flat Rate: $10.00</a></li>
-                    <li class="active">
-                      <a href="#">Local Delivery: $2.00</a>
-                    </li>
-                  </ul>
-                  <h6>
-                    Calculate Shipping
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                  </h6>
-                  <select class="shipping_select">
-                    <option value="1">Bangladesh</option>
-                    <option value="2">India</option>
-                    <option value="4">Pakistan</option>
-                  </select>
-                  <select class="shipping_select">
-                    <option value="1">Select a State</option>
-                    <option value="2">Select a State</option>
-                    <option value="4">Select a State</option>
-                  </select>
-                  <input type="text" placeholder="Postcode/Zipcode" />
-                  <a class="gray_btn" href="#">Update Details</a>
-                </div>
-              </td>
-            </tr>
+            
             <tr class="out_button_area">
               <td></td>
               <td></td>
               <td></td>
               <td>
                 <div class="checkout_btn_inner d-flex align-items-center">
-                  <a class="gray_btn" href="#">Continue Shopping</a>
-                  <a class="primary-btn" href="#">Proceed to checkout</a>
+                  <a class="gray_btn" href="/">Continue Shopping</a>
+                  <a class="primary-btn" href="/checkout">Proceed to checkout</a>
                 </div>
               </td>
             </tr>
@@ -243,4 +119,105 @@
     </div>
   </div>
 </section>
+<% }else{ %> 
+  <section class="cart_area">
+    <div class="container">
+      <div class="cart_inner ">
+        <div class="col-12 row">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+
+          <img src="img/empty-cart.gif" alt="cart empty">
+        </div>
+        <div class="col-12 d-flex justify-content-center align-items-center">
+
+          <h1 style="font-weight: 600;">YOUR CART IS EMPTY</h1>
+        </div>
+        <div class="col-12 d-flex justify-content-center align-items-center">
+          <a href="/mobile" class="primary-btn">Continue Shopping</a>
+        </div>
+      </div>
+        </div>
+        </div>
+        </section>
+  <% } %> 
 <!--================End Cart Area =================-->
+<script>
+    
+  function quantity(productId,price,cartId,count){
+      let pid = String(productId)
+      let countn = Number(count)
+      const id = document.getElementById("sst"+pid)
+      const totalId = document.getElementById("total"+pid)
+      const subtotal = document.getElementById("subtotal");
+      let qty =Number(id.value);
+      let value = Number(subtotal.innerHTML);
+      let pricee = Number(price)
+      
+    if(qty+countn>0){
+      
+      fetch("/quantityChange",{
+          method:"post",
+          headers:{ 'Content-Type': 'application/json'},
+          body: JSON.stringify({ productId,cartId,count,qty }) 
+      }).then(res =>res.json()).then(data=>{
+          
+          if(data.change == true){
+            
+            if(countn==1){
+            
+
+             ++qty
+             total=price*qty
+  
+             totalId.innerHTML=total;
+             subtotal.innerHTML= value+pricee
+             
+             id.value++
+
+            }else if(countn == -1){
+              
+             --qty
+             total=price*qty
+             totalId.innerHTML=total;
+             subtotal.innerHTML= value-pricee
+              id.value--;
+            }
+             
+
+             
+          }
+      })
+    }
+  }
+
+function deleted(productId) {
+  let pid = String(productId)
+  
+        const id = document.getElementById(pid)
+        let value = Number(subtotal.innerHTML);
+        
+        // console.log(document.getElementById("total"+pid).innerHTML);
+        let pricee = Number(document.getElementById("total"+pid).innerHTML)
+        
+
+        
+
+  fetch("/cartDelete",{
+            method:"post",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify({productId}) 
+        }).then(res =>res.json()).then(data=>{
+            
+            if(data.deleted == true){
+
+              value=value-pricee
+              console.log(value);
+              subtotal.innerHTML= value
+              
+               id.remove()
+
+            }
+        })
+}
+
+</script>

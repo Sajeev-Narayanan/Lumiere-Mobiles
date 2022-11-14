@@ -184,72 +184,112 @@
 
           <ul class="nav nav-pills flex-column">
               <li ><a href="/profile"> <i class="fa fa-user"></i> Profile</a></li>
-              <li class="active"><a href="/changePassword"> <i class="fa fa-edit"></i> Change Password</a></li>
-              <li><a href="/orders"> <i class="fa fa-calendar"></i> Orders </a></li>
+              <li ><a href="/changePassword"> <i class="fa fa-edit"></i> Change Password</a></li>
+              <li class="active"><a href="/orders"> <i class="fa fa-calendar"></i> Orders </a></li>
           </ul>
       </div>
   </div>
-  <div class="col-lg-6">
-    <div class="login_form_inner">
-     
-      <form
-        class="row login_form"
-        action="/changePasswordPost"
-        method="post"
-        id="contactForm"
-        novalidate="novalidate"
-      >
-        
-        <div class="col-md-12 form-group">
-          <input
-            type="password"
-            class="form-control"
-            style="background-color: white"
-            id="name"
-            name="currentPassword"
-            placeholder="Current Password"
-            onfocus="this.placeholder = ''"
-            onblur="this.placeholder = 'Current Password'"
-          />
-        </div>
-        <div class="col-md-12 form-group">
-            <input
-              type="password"
-              class="form-control"
-              style="background-color: white"
-              id="name"
-              name="newPassword"
-              placeholder="New Password"
-              onfocus="this.placeholder = ''"
-              onblur="this.placeholder = 'New Password'"
-            />
-          </div>
-          <div class="col-md-12 form-group">
-            <input
-              type="password"
-              class="form-control"
-              style="background-color: white"
-              id="name"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              onfocus="this.placeholder = ''"
-              onblur="this.placeholder = 'Confirm Password'"
-            />
-          </div>
-          <div class="text-danger"><%= msag %></div>
-          <div class="text-success"><%= msg %></div>
-        
+  <div class="col-md-9 profile-info">
+    <div class="panel">
+        <div class="addressPanel">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                      
+                      <thead>
+                        <tr class="out_button_area">
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          
+                          
+                          <td>
+                            <div class="checkout_btn_inner d-flex align-items-center">
+                              <a class="primary-btn" style="height: 50px;border-radius: 0;width: 13rem;" href="/">Continue Shopping</a>
+                              
+                            </div>
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <th scope="col">Product</th>
+                          
+                          <th scope="col">Price</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Total</th>
+                          <th scope="col">Expected Delivery</th>
+                          <th>Order Status</th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for( product of productDetails){ %> 
+                          <% for(products of product.products){ %> 
+                        <tr id="<%= product.cart_item.productId %>">
+                          <td>
+                            <div class="media">
+                              <div class="d-flex">
+                                <a href="/product?id=<%= products._id %>">
+                                  <div style="background-image: url(<%=products.image[0].url%>);width: 100px;height: 150px;
+                                  background-size: contain;background-repeat: no-repeat;"></div>
+                              </a>
+                              </div>
+                              </div>
+                              </td>
+                              <td>
+                                
+                                <%= products.product_name %> 
+                             
+                          </td>
+                          <td>
+                            <h5>₹<%= products.finalPrice %></h5>
+                          </td>
+                          <td>
+                            <div class="product_count">
+                                <h5><%= product.cart_item.product_quantity %></h5>
+                              
+                             
+                            </div>
+                          </td>
+                          <td>
+                            <h5 id="total<%= products._id %>">₹<%= product.cart_item.product_quantity * products.finalPrice %></h5>
+                          </td>
+                          <td><% if(product.orderStatus[0].type == "cancelled"){%><h5 class="text-danger">Cancelled</h5><% }else if(product.orderStatus[0].type == "Delivered"){ %> <% } else{%><%= product.expectedDate.toDateString() %><% } %>   </td>
+                          <td><% if(product.orderStatus[0].type == "cancelled"){%><% }else{ %><h5><%= product.orderStatus[0].type %></h5><% } %></td>
+                          <td><% if(product.orderStatus[0].type == "cancelled" || product.orderStatus[0].type == "Delivered"){}else {%> <button class="btn btn-danger" onclick="cancel('<%= product._id %>')">Cancel</button> <% } %></td>
+                          <td><a href="/MyOrder?orderId=<%= product._id %> "  class="btn btn-warning">more</a></td>
 
-        <div class="col-md-12 form-group">
-          <button type="submit" value="submit" class="primary-btn">
-            Save Changes
-          </button>
+
+                        </tr>
+                        <% }} %> 
+                        
+                        
+                        
+                    
+                       
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
         </div>
-      </form>
     </div>
   </div>
-  </div>
-  </div>
+ 
+
+    
+    
+    
+
+
+</div>
+</div>
   <footer class="footer-area section_gap">
     <div class="container">
       <div class="row">
@@ -386,5 +426,58 @@
     <script src="js/gmaps.min.js"></script>
     <script src="js/main.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      function cancel(orderId){
+    // let orid = String(orderId)
+    // const Id = document.getElementById("status"+orid)
+
+    Swal.fire({
+  title: 'Are you sure?',
+  text: "Do you want to cancel the Order!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, Cancel Order!',
+  cancelButtonText: 'Close'
+}).then((result) => {
+  if (result.isConfirmed) {
+  
+
+    fetch("/admin/orderCancel",{
+            method:"post",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify({ orderId }) 
+        }).then(res =>res.json()).then(data=>{
+            
+            if(data.cancel == true){
+              
+              window.location = '/orders'
+               
+
+               
+            }
+        })
+    
+  }
+})
+ 
+
+  }
+    </script>
+    <!-- <script>
+
+      var nav = document.querySelector('profile-nav'); // Identify target
+
+      window.addEventListener('scroll', function(event) { // To listen for event
+          event.preventDefault();
+      
+          if (window.scrollY = 10) { // Just an example
+              nav.style.position  ='relative'; // or default color
+          } else {
+              nav.style.position  ='sticky';
+          }
+      });
+  </script> -->
 </body>
 </html>

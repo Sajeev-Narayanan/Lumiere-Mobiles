@@ -19,47 +19,50 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   <th scope="col">Payment Type</th>
                   <th scope="col">Status</th>
                   <th scope="col"></th>
-                  <!-- <th scope="col">Heading</th>
-                  <th scope="col">Heading</th> -->
+                  <th scope="col"></th>
+                  <!-- <th scope="col">Heading</th> -->
                 </tr>
               </thead>
               <tbody>
+                <%let i=1; for (const orders of order) { %> 
                 <tr>
-                  <th scope="row">1</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <!-- <td>Cell</td>
-                  <td>Cell</td> -->
+                  <th scope="row"><%= i %> </th>
+                  <td><%= orders.address.name %> </td>
+                  <td><%= orders.address.address_line %></td>
+                  <td><%= orders.address.mobile %></td>
+                  <td><%= orders.address.email %></td>
+                  <td><%= orders.paymentStatus %></td>
+                  <td><button
+                    onclick="orderId('<%= orders._id %>')"
+                    type="button"
+                    class="customButton-white"
+                   
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    id="status<%= orders._id %>"
+                    <% if(orders.orderStatus[0].type == "cancelled"){%>disabled<% } %> 
+                   
+      
+                  ><%= orders.orderStatus[0].type%></button></td>
+                  <td><button
+                    onclick="more('<%= orders._id %>')"
+                    type="button"
+                    class="btn-warning"
+                   
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter2"
+                   
+      
+                  >
+                    more
+                </button></td>
+                
+                  <td><% if(orders.orderStatus[0].type == "cancelled"){}else {%> <button class="btn btn-danger" onclick="cancel('<%= orders._id %>')">Cancel</button> <% } %></td>
+                  
+                  <!-- <td>Cell</td> -->
                 </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <!-- <td></td>
-                  <td></td> -->
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <!-- <td></td>
-                  <td></td> -->
-                </tr>
+                <% i++} %> 
+                
               </tbody>
             </table>
           </div>
@@ -68,3 +71,226 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
     </div>
   </div>
 </div>
+
+<!-- Modal2 -->
+<div
+  class="modal fade "
+  id="exampleModalCenter2"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-body-2">
+        <div class="login_form_inner">
+            <h3>ORDER</h3>
+            <div id="order" class="text-dark"></div>
+            
+          </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div
+  class="modal fade "
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-body-2">
+        <div class="login_form_inner">
+            <h3>ORDER STATUS</h3>
+            <div class="text-dark">
+              <select size="1" id="orderStatus" name="orderStatus" class="form-control text-dark" style="border: solid 1px black;background-color: aliceblue;">
+                <option value="Ordered" selected="selected" class="bg-light">
+                    Ordered
+                </option>
+                <option value="packed" class="bg-light">
+                    packed
+                </option>
+                <option value="Shipped" class="bg-light">
+                   Shipped
+                </option>
+                <option value="Delivered" class="bg-light">
+                    Delivered
+                </option>
+                
+            </select>
+            <input type="text" id="orderId" value="" hidden>
+            <button class="btn btn-success mt-2" onclick="orderstatus()"
+            data-dismiss="modal"
+          aria-label="Close">Update</button>
+            </div>
+            
+          </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  function more(orderId){
+        // let pid = String(productId)
+        // const id = document.getElementById("div"+pid)
+        const order = document.getElementById("order")
+        
+        
+      
+        fetch("/admin/moreorder",{
+            method:"post",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify({ orderId }) 
+        }).then(res =>res.json())
+        .then(data=>{
+         
+          let table = `<div class="table-responsive">
+                    <table class="table text-dark">
+                      <thead>
+                        <tr>
+                          <th scope="col">Product</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Total</th>
+                          
+                          
+                        </tr>
+                      </thead>
+                      <tbody>`
+                        for( product of data.productDetails){  
+                           for(products of product.products){  
+                       table+= `<tr>
+                          <td>
+                            <div class="media">
+                              <div class="d-flex">
+                                <a href="/product?id=${ products._id}">
+                                  <div style="background-image: url(${products.image[0].url});width: 100px;height: 150px;
+                                  background-size: contain;background-repeat: no-repeat;"></div>
+                              </a>
+                              </div>
+                              <div class="media-body">
+                                <p>${ products.product_name } </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <h5 class="text-dark">₹ ${ products.finalPrice }</h5>
+                          </td>
+                          <td>
+                            <div class="product_count">
+                                <h5 class="text-dark">${product.cart_item.product_quantity}</h5>
+                              
+                             
+                            </div>
+                          </td>
+                          <td>
+                            <h5 class="text-dark">₹${product.cart_item.product_quantity * products.finalPrice}</h5>
+                          </td>
+                         
+                        </tr>`
+                      }}
+                      table+=
+                     ` </tbody>
+                    </table>
+                  </div>`
+
+            console.log(table);
+            order.innerHTML = table
+        })
+    }
+</script>
+<script>
+  function orderId(orderId){
+    document.getElementById("orderId").value = orderId;
+   
+  }
+  function orderstatus(){
+    const status = document.getElementById("orderStatus").value
+    const orderId = document.getElementById("orderId").value
+    let orid = String(orderId)
+    const Id = document.getElementById("status"+orid)
+   
+
+
+    fetch("/admin/orderstatus",{
+            method:"post",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify({ status,orderId }) 
+        }).then(res =>res.json())
+        .then(data=>{
+          if(data.update == true){
+            Id.innerHTML = status
+
+          }
+        })
+  }
+
+  function cancel(orderId){
+    let orid = String(orderId)
+    const Id = document.getElementById("status"+orid)
+
+    Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, Cancel Order!',
+  cancelButtonText: 'Close'
+}).then((result) => {
+  if (result.isConfirmed) {
+  
+
+    fetch("/admin/orderCancel",{
+            method:"post",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify({ orderId }) 
+        }).then(res =>res.json()).then(data=>{
+            
+            if(data.cancel == true){
+              
+              window.location = '/admin/showOrder'
+               
+
+               
+            }
+        })
+    
+  }
+})
+ 
+
+  }
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
