@@ -47,6 +47,7 @@ adminRouter.post("/addCoupon",auth.sessionCheckDashboard,adminControllers.addCou
 adminRouter.post("/compare",adminControllers.compare);
 adminRouter.get("/showBanner",auth.sessionCheckDashboard,adminControllers.showBanner);
 adminRouter.post("/addBanner",auth.sessionCheckDashboard,upload.array('image'),adminControllers.addBanner);
+adminRouter.post("/bannertDelete",auth.sessionCheckDashboard,adminControllers.bannertDelete);
 
 
 module.exports = adminRouter;

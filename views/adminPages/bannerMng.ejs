@@ -25,12 +25,13 @@
                                                 <th scope="col">#</th>
                                                 <th scope="col">NAME</th>
                                                 <th scope="col">IMAGE</th>
+                                                <th></th>
 
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <% let i=1; for(data of banner) {%>
-                                                <tr>
+                                                <tr id="<%= data._id %>">
                                                     <td>
                                                         <%= i %>
                                                     </td>
@@ -41,6 +42,9 @@
                                                         <div
                                                             style="background-image: url('<%= data.image[0].url %>');width: 100px; height: 100px;background-size: contain; background-repeat: no-repeat;">
                                                         </div>
+                                                    </td>
+                                                    <td><a style="font-size: xx-large; cursor: pointer;"
+                                                            onclick="deleted('<%= data._id %>')">&times</a>
                                                     </td>
                                                 </tr>
                                                 <% i++} %>
@@ -90,3 +94,34 @@
                     </div>
                 </div>
             </div>
+
+
+            <script>
+                function deleted(bannerId) {
+                    let pid = String(bannerId)
+
+                    const id = document.getElementById(pid)
+                    // let value = Number(subtotal.innerHTML);
+
+                    // console.log(document.getElementById("total"+pid).innerHTML);
+                    // let pricee = Number(document.getElementById("total" + pid).innerHTML)
+
+
+
+
+                    fetch("/admin/bannertDelete", {
+                        method: "post",
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ bannerId })
+                    }).then(res => res.json()).then(data => {
+
+                        if (data.deleted == true) {
+
+                           
+
+                            id.remove()
+
+                        }
+                    })
+                }
+            </script>

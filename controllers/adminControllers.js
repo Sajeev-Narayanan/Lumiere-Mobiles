@@ -507,6 +507,20 @@ const addBanner = async(req,res)=>{
   
 }
 
+const bannertDelete = async(req,res)=>{
+  let deleted = false;
+  const { bannerId } = req.body;
+  
+  try {
+    await Banner.deleteOne({ _id:bannerId });
+    deleted = true
+  } catch {
+    res.send("error!!!!!!!!!!!!!!!!!!!!!")
+  }
+  res.send({ deleted })
+}
+
+
 
 exports.signinPage = signinPage;
 exports.signin = signin;
@@ -536,3 +550,4 @@ exports.addCoupon = addCoupon;
 exports.compare = compare;
 exports.showBanner = showBanner;
 exports.addBanner = addBanner;
+exports.bannertDelete = bannertDelete;
