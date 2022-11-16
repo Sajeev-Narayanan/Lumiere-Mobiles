@@ -41,8 +41,10 @@
                     <h2>₹<%= product.finalPrice %> </h2>
                    
                     <ul class="list">
+                        <% if(stock.stock == null) {%> 
+                            <li class="text-danger"><span>Availibility</span> : Out Of Stock</li>
                         
-                        <% if(stock.stock>10){ %> 
+                        <%}else if(stock.stock>10){ %> 
                         <li class="text-success"><span>Availibility</span> : In Stock</li>
                         <% }else if(stock.stock>0){ %>
                             <li class="text-danger"><span>Availibility</span> : <%= stock.stock %> Left</li>

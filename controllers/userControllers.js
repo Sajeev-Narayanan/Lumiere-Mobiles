@@ -231,7 +231,7 @@ const addAddress = async (req, res) => {
       { upsert: true }
     );
     if (check == "checkOut") {
-      res.redirect("/chechout")
+      res.redirect("/checkout")
     } else {
       res.redirect("/profile")
     }
@@ -309,7 +309,8 @@ const changePasswordPost = async (req, res) => {
 }
 
 const product = async (req, res) => {
-  const id = mongoose.Types.ObjectId(req.query.id);
+  // const id = mongoose.Types.ObjectId(req.query.id);
+  const id = req.query.id;
   const email = req.session.email
 
   try {
