@@ -125,7 +125,8 @@ const loginPost = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   
-  if (user.state == true) {
+  if (user) {
+    if(user.state == true){
     const validPassword = await bcrypt.compare(password, user.password);
 
     if (validPassword) {
@@ -140,6 +141,9 @@ const loginPost = async (req, res) => {
   } else {
     req.flash("invalid", "This account was blocked");
     res.redirect("/login");
+  }}else{
+    req.flash("invalid", "invalid username or password");
+      res.redirect("/login");
   }
 };
 const logout = (req, res) => {
@@ -277,9 +281,12 @@ const userEditPost = async (req, res) => {
 
 const changePassword = async (req, res) => {
   const email = req.session.email;
-
+if(email){
   const user = await User.findOne({ email })
   res.render("userpages/changePassword", { user, msag: req.flash("invalid"), msg: req.flash("valid"),email })
+}else{
+  res.redirect("/login")
+}
 }
 
 const changePasswordPost = async (req, res) => {
@@ -308,13 +315,18 @@ const changePasswordPost = async (req, res) => {
 }
 
 const product = async (req, res) => {
-  const id = req.query.id;
+  const id = mongoose.Types.ObjectId(req.query.id);
   const email = req.session.email
 
   try {
     const product = await Product.findById(id);
+    
     const stock = await Stock.findOne({ productId: id })
+    if(product){
     res.render("userpages/product", { product, stock,email });
+    }else{
+      res.render("pageNotFound.ejs");
+    }
 
   } catch (error) {
     res.render("pageNotFound.ejs");
@@ -547,15 +559,150 @@ const payverify = async(req,res)=>{
 
  const orders = async(req,res)=>{
   const email = req.session.email;
+  if(email){
   const user = await User.findOne({ email })
   const productDetails = await Order.aggregate([{ $match: { email:email } }, { $unwind: '$cart_item' }, { $lookup: { from: 'products', localField: 'cart_item.productId', foreignField: '_id', as: 'products' } }])
-  
   res.render("userpages/userOrder",{user,productDetails,email})
+  }else{
+    res.redirect("/login")
+  }
  }
  const couponPage = async(req,res)=>{
   const email = req.session.email;
   const coupon = await Coupon.find({})
   res.render("userpages/coupon",{coupon,email})
+ }
+
+ const sort = async(req,res)=>{
+  const select = req.body.select
+  let product
+  if(select == 1){
+    product = await Product.find({});
+  }
+  else if(select == 2){
+    product = await Product.find({}).sort({price: 1});
+  }else if(select == 3){
+    product = await Product.find({}).sort({price: -1});
+  }
+  res.send({product});
+ }
+
+ const catagorySort = async(req,res)=>{
+  
+  const catagoryId = mongoose.Types.ObjectId(req.body.catagoryId);
+  
+  const product = await Product.find({category_id:catagoryId})
+  
+  res.send({product});
+
+ }
+
+ const filter = async(req,res)=>{
+  const {brand,ram,memory,discount,price,sort} = req.body;
+  // const brand = mongoose.Types.ObjectId(req.body.brand);
+  let product = ""
+  if(brand&&ram&&memory&&discount&&price){
+    if(sort == 1){
+      product = await Product.find({brand_id:brand,ram:ram,memory:memory,discount:{$gte:discount},finalPrice:{$lte:price}});
+    }else if(sort == 2){
+      product = await Product.find({brand_id:brand,ram:ram,memory:memory,discount:{$gte:discount},finalPrice:{$lte:price}}).sort({price: 1});
+    }else if(sort == 3){
+      product = await Product.find({brand_id:brand,ram:ram,memory:memory,discount:{$gte:discount},finalPrice:{$lte:price}}).sort({price: -1});
+    }
+    
+     
+  }else if(brand&&ram&&memory&&discount){
+    if(sort == 1){
+      product = await Product.find({brand_id:brand,ram:ram,memory:memory,discount:{$gte:discount}});
+    }
+    else if(sort == 2){
+      product = await Product.find({brand_id:brand,ram:ram,memory:memory,discount:{$gte:discount}}).sort({price: 1});
+    }else if(sort == 3){
+      product = await Product.find({brand_id:brand,ram:ram,memory:memory,discount:{$gte:discount}}).sort({price: -1});
+    }
+   
+    
+  }else if(brand&&ram&&memory){
+    if(sort == 1){
+      product = await Product.find({brand_id:brand,ram:ram,memory:memory});
+    }
+    else if(sort == 2){
+      product = await Product.find({brand_id:brand,ram:ram,memory:memory}).sort({price: 1});
+    }else if(sort == 3){
+      product = await Product.find({brand_id:brand,ram:ram,memory:memory}).sort({price: -1});
+    }
+    
+    
+  }else if(brand&&ram){
+    if(sort == 1){
+      product = await Product.find({brand_id:brand,ram:ram});
+    }
+    else if(sort == 2){
+      product = await Product.find({brand_id:brand,ram:ram}).sort({price: 1});
+    }else if(sort == 3){
+      product = await Product.find({brand_id:brand,ram:ram}).sort({price: -1});
+    }
+   
+   
+  }else if(brand){
+    if(sort == 1){
+      product = await Product.find({brand_id:brand});
+    }
+    else if(sort == 2){
+      product = await Product.find({brand_id:brand}).sort({price: 1});
+    }else if(sort == 3){
+      product = await Product.find({brand_id:brand}).sort({price: -1});
+    }
+    
+   
+  }else if(ram){
+    if(sort == 1){
+      product = await Product.find({ram:ram});
+    }
+    else if(sort == 2){
+      product = await Product.find({ram:ram}).sort({price: 1});
+    }else if(sort == 3){
+      product = await Product.find({ram:ram}).sort({price: -1});
+    }
+    
+   
+  }else if(memory){
+    if(sort == 1){
+      product = await Product.find({memory:memory});
+    }
+    else if(sort == 2){
+      product = await Product.find({memory:memory}).sort({price: 1});
+    }else if(sort == 3){
+      product = await Product.find({memory:memory}).sort({price: -1});
+    }
+   
+    
+  }else if(discount){
+    if(sort == 1){
+      product = await Product.find({discount:{$gte:discount}});
+    }
+    else if(sort == 2){
+      product = await Product.find({discount:{$gte:discount}}).sort({price: 1});
+    }else if(sort == 3){
+      product = await Product.find({discount:{$gte:discount}}).sort({price: -1});
+    }
+    
+    
+  }else if(price){
+    if(sort == 1){
+      product = await Product.find({finalPrice:{$lte:price}});
+    }
+    else if(sort == 2){
+      product = await Product.find({finalPrice:{$lte:price}}).sort({price: 1});
+    }else if(sort == 3){
+      product = await Product.find({finalPrice:{$lte:price}}).sort({price: -1});
+    }
+    
+    
+  }else{
+    product = await Product.find({})
+  }
+   res.send({product}) 
  }
 
 
@@ -588,3 +735,6 @@ const payverify = async(req,res)=>{
   exports.MyOrder = MyOrder;
   exports.orders = orders;
   exports.couponPage = couponPage;
+  exports.sort = sort;
+  exports.catagorySort = catagorySort;
+  exports.filter = filter;

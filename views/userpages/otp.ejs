@@ -32,13 +32,13 @@
       </div>
       <div class="col-lg-6">
         <div class="login_form_inner">
-          <h3>Verify with OTP</h3>
+          <h3 style="font-weight: 600;">Verify with OTP</h3>
           <form
             class="row login_form"
             action="/verify"
             method="post"
             id="contactForm"
-            novalidate="novalidate"
+            
           >
             <div class="col-md-12 form-group">
               <input
@@ -50,6 +50,7 @@
                 placeholder="Enter OTP"
                 onfocus="this.placeholder = ''"
                 onblur="this.placeholder = 'Enter OTP'"
+                required
               />
             </div>
             <div class="text-danger"><%= msg %></div>

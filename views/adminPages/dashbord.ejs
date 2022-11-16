@@ -181,9 +181,7 @@ function CreatePDFfromHTML() {
     var canvas_image_height = HTML_Height;
 
     var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-    // document.getElementById("card").style.background="black"
-    // document.getElementById("card2").style.background="black"
-    // document.getElementById("card3").style.background="black"
+    
 
     html2canvas($(".html-content")[0]).then(function (canvas) {
         var imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -193,11 +191,8 @@ function CreatePDFfromHTML() {
             pdf.addPage(PDF_Width, PDF_Height);
             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
         }
-        pdf.save("Your_PDF_Name.pdf");
-        // $(".html-content").hide();
-    //     document.getElementById("card").style.background=rgba(0, 0, 0, 0.2);
-    // document.getElementById("card2").style.background=rgba(0, 0, 0, 0.2);
-    // document.getElementById("card3").style.background=rgba(0, 0, 0, 0.2);
+        pdf.save("Sales Report.pdf");
+       
     });
     
 }

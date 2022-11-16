@@ -19,6 +19,8 @@ const flash = require("connect-flash");
 const methodOverride = require("method-override");
 const nodemailer = require("nodemailer");
 const Swal = require('sweetalert2')
+// const $  = require( 'jquery' );
+// const dt = require('datatables.net')();
 
 // const multer = require("multer");
 // const upload = multer({ dest: "" });

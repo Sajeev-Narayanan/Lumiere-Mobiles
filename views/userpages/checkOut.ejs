@@ -21,7 +21,7 @@
 
       <div class="cupon_area">
         <div class="check_title">
-          <h2>Offer Closes Soon!!!! <a href="/couponPage">Click here to show coupons</a></h2>
+          <h2><b>Offer Closes Soon!!!!</b> <a href="/couponPage">Click here to show coupons</a></h2>
         </div>
         <input type="text" id="coupon" placeholder="Enter coupon code">
         <button class="tp_btn" id="couponBtn">Apply Coupon</button>
@@ -46,7 +46,7 @@
                 <%let number=1;let total=0; user.address.forEach(address=> { %>
 
                   <div class="addressPanel ">
-                    <input class="float-left mt-2 pixel-radio" type="radio" required checked name="address_line" id="confirm-radio"
+                    <input class="float-left mt-2 pixel-radio" type="radio" checked name="address_line" id="confirm-radio"
                       value="<%=address.house_name%>,<%=address.town%>,<%=address.district%>,<%=address.state%>,<%=address.country%>,<%=address.post_code%>,<%=user.mobile%>"
                       required>
 
@@ -72,8 +72,8 @@
 
 
             </div>
-            <div class="col-lg-6">
-              <div class="order_box">
+            <div class="col-lg-6 addressPanel2">
+              <div class="order_box" style="background: none;">
                 <h2>Your Order</h2>
                 <div class="table-responsive">
                   <table class="table">
@@ -180,32 +180,31 @@
         <div class="modal-body modal-body-2">
           <div class="login_form_inner">
 
-            <form class="row login_form" action="/addAddress?check=checkOut" method="post" id="contactForm"
-              novalidate="novalidate">
+            <form class="row login_form" action="/addAddress?check=checkOut" method="post" id="contactForm">
               <div class="col-md-12 form-group">
                 <input type="text" class="form-control" style="background-color: white" id="name" name="house_name"
                   placeholder="House Name/No" onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'House Name/No'" />
+                  onblur="this.placeholder = 'House Name/No'" required/>
               </div>
               <div class="col-md-12 form-group">
                 <input type="text" class="form-control" style="background-color: white" id="name" name="town"
-                  placeholder="Town" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Town'" />
+                  placeholder="Town" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Town'" required/>
               </div>
               <div class="col-md-12 form-group">
                 <input type="text" class="form-control" style="background-color: white" id="name" name="district"
-                  placeholder="District" onfocus="this.placeholder = ''" onblur="this.placeholder = 'District'" />
+                  placeholder="District" onfocus="this.placeholder = ''" onblur="this.placeholder = 'District'" required/>
               </div>
               <div class="col-md-12 form-group">
                 <input type="text" class="form-control" style="background-color: white" id="name" name="state"
-                  placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
+                  placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" required/>
               </div>
               <div class="col-md-12 form-group">
                 <input type="text" class="form-control" style="background-color: white" id="name" name="country"
-                  placeholder="Country" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Country'" />
+                  placeholder="Country" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Country'" required/>
               </div>
               <div class="col-md-12 form-group">
-                <input type="text" class="form-control" style="background-color: white" id="name" name="post_code"
-                  placeholder="Pincode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Pincode'" />
+                <input type="text" class="form-control" style="background-color: white" id="name" name="post_code" pattern="[0-9]{6,6}" title="Enter valid pincode"
+                  placeholder="Pincode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Pincode'" required/>
               </div>
 
 

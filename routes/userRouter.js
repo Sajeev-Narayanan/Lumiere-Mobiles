@@ -68,4 +68,10 @@ userRouter.get("/orders",userControllers.orders);
 
 userRouter.get("/couponPage",userControllers.couponPage);
 
+userRouter.post("/sort",userControllers.sort);
+
+userRouter.post("/catagorySort",userControllers.catagorySort);
+
+userRouter.post("/filter",userControllers.filter);
+
 module.exports = userRouter;

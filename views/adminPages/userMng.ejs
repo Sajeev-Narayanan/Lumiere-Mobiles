@@ -8,7 +8,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
         <div class="card-body">
           <h5 class="card-title">USERS</h5>
           <div class="table-responsive">
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover" id="table">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -17,7 +17,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   <th scope="col">Username</th>
                   <th scope="col">Email</th>
                   <th scope="col">contact</th>
-                  <th scope="col">Address</th>
+                 
                   <th scope="col"></th>
                   <!-- <th scope="col">Heading</th>
                   <th scope="col">Heading</th> -->
@@ -32,7 +32,7 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
                   <td><%= datas.username %></td>
                   <td><%= datas.email %></td>
                   <td><%= datas.mobile %></td>
-                  <td></td>
+                 
                   <td>
                     <% if(datas.state == true) {%>
                       
@@ -59,3 +59,12 @@ include('../partials/adminSideBar') %> <%- include('../partials/adminNavbar') %>
     </div>
   </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#table').DataTable({
+        
+    });
+});
+</script>
