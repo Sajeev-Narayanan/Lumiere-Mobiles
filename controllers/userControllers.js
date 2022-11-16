@@ -48,7 +48,7 @@ const loginPageGet = (req, res) => {
 
 const signupPageGet = (req, res) => {
   const email = req.session.email
-  res.render("userpages/signup",{email});
+  res.render("userpages/signup",{msg: req.flash("invalid"),email});
 };
 
 const signup = async (req, res) => {
@@ -76,15 +76,7 @@ const signup = async (req, res) => {
   });
   req.session.useremail = req.body.email;
 
-  //
-
-  // const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-  // const mailOptions = {
-  //   from: "sajeevnarayanan817@gmail.com",
-  //   to: email,
-  //   subject: "Varify Your Email",
-  //   html: `<p>Enter <b>${otp}</b> to varify your email address and complete signup process`,
-  // };
+  
   const mailOptions = {
     from: "royalmobiles@gmail.com",
     to: req.body.email,
@@ -92,21 +84,23 @@ const signup = async (req, res) => {
     html: `<h3>Enter OTP to varify your email address and complete signup process</h3><h1>${otp}</h1>`, // html body
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
 
-    res.render("userpages/otp", { msg: "" });
-  });
-  console.log(otp);// #########################################################################################################
   try {
     await user.save();
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log("Message sent: %s", info.messageId);
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+      res.render("userpages/otp", { msg: "",email});
+    });
     // res.redirect("/login");
   } catch (error) {
     console.log(error);
+    req.flash("invalid", "User already exists");
     res.redirect("/signup");
   }
 };
