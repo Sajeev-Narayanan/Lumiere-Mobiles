@@ -93,6 +93,6 @@ app.get("*", (req, res, next) => {
   res.render("pageNotFound.ejs");
 });
 
-app.listen(5000, () => {
-  console.log("listening to port 5000 .@@@@@@@👌😍👍😁");
+app.listen(3000, () => {
+  console.log("listening to port 3000 .@@@@@@@👌😍👍😁");
 });
