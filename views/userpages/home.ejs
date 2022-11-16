@@ -17,14 +17,14 @@
             </div>
             <div class="col-sm-6">
               <div class="">
-                <div style="background-image: url('<%= data.image[0].url %>');width: 450px; height: 520px;background-size: contain;background-repeat: no-repeat;"></div>
+                <div style="background-image: url('<%= data.image[0].url %>');width: 450px; height: 520px;background-size: cover;background-position: center;background-repeat: no-repeat;"></div>
                 
               </div>
             </div>
           </div>
           <% } %> 
           <% }else{ %>
-            <h1>SORRY NO BANNERS ARE EXIST</h1> 
+            <h1 class="tex-dark">SORRY NO BANNERS ARE EXIST</h1> 
             <% } %> 
          
         </div>
@@ -50,7 +50,7 @@
         <div class="col-lg-3 col-md-6">
           <div class="single-product">
             <a href="/product?id=<%= products._id %>">
-            <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: contain;background-repeat: no-repeat;"></div>
+            <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: cover; background-position: center;background-repeat: no-repeat;"></div>
           </a>
             <div class="product-details mt-3">
               <h6><%= products.product_name %></h6>
@@ -78,7 +78,7 @@
         </div>
         <% } %> 
         <% }else{ %>
-          <h1>SORRY!!! NO PRODUCTS EXIST</h1> 
+          <h1 class="tex-dark">SORRY!!! NO PRODUCTS EXIST</h1> 
           <% } %> 
         <!-- single product -->
 
@@ -102,7 +102,7 @@
         <div class="col-lg-3 col-md-6">
           <div class="single-product">
             <a href="/product?id=<%= products._id %>">
-            <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: contain;background-repeat: no-repeat;"></div>
+            <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: cover;background-position: center;background-repeat: no-repeat;"></div>
           </a>
             <div class="product-details mt-3">
               <h6><%= products.product_name %></h6>

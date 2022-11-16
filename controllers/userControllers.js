@@ -34,7 +34,7 @@ const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
 
 const home = async (req, res) => {
   const email = req.session.email
-  const product = await Product.find({});
+  const product = await Product.find({}).limit(8);
   const banner = await Banner.find({})
 
 
