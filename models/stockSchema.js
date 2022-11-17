@@ -8,7 +8,6 @@ const stockSchema = new Schema({
   productName: { type: String, trim: true },
   stock: {
     type: Number,
-
     trim: true,
   },
 });

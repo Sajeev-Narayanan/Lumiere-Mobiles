@@ -243,6 +243,12 @@ const addProductPost = async (req, res) => {
 
   product.image = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   try {
+    let productId = product._id
+    await Stock.updateOne(
+      { productId: productId },
+      { $set: { stock: 0, productName: product_name } },
+      { upsert: true }
+    );
     await product.save();
     res.redirect("/admin/showProduct");
   } catch (error) {
