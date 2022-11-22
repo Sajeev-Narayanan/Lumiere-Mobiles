@@ -1,0 +1,4 @@
+yum install -y httpd
+yum install nodejs
+npm install yarn
+yarn install
