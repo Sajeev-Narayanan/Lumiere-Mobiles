@@ -36,17 +36,18 @@ const signin = async (req, res) => {
       res.redirect("/admin/");
     }
   } else {
-    if(username == "adminSanju" && password == "sanjus"){
+    if (username == "adminSanju" && password == "sanjus") {
       req.session.adminName = username;
       res.redirect("/admin/dashboard");
-    }else{
-    req.flash("invalid", "invalid username or password");
-    res.redirect("/admin/");
-  }}
+    } else {
+      req.flash("invalid", "invalid username or password");
+      res.redirect("/admin/");
+    }
+  }
 };
 
-const dashboard = async(req, res) => {
-  const orders = await Order.find({isCompleted:true})
+const dashboard = async (req, res) => {
+  const orders = await Order.find({ isCompleted: true })
   const users = await User.find({})
   let revenue = 0;
   let delivered = 0;
@@ -54,52 +55,52 @@ const dashboard = async(req, res) => {
   let ordered = 0;
   let shipped = 0;
   let cancelled = 0;
-  let jan=0
-  feb=0
-  mar=0
-  apr=0
-  may=0
-  jun=0
-  jul=0
-  aug=0
-  sep=0
-  oct=0
-  nov=0
-  dec=0 ;
-  for(datas of orders){
+  let jan = 0
+  feb = 0
+  mar = 0
+  apr = 0
+  may = 0
+  jun = 0
+  jul = 0
+  aug = 0
+  sep = 0
+  oct = 0
+  nov = 0
+  dec = 0;
+  for (datas of orders) {
     revenue += datas.bill;
-    if(datas.orderStatus[0].type == "Delivered"){
+    if (datas.orderStatus[0].type == "Delivered") {
       delivered++;
     }
-    else if(datas.orderStatus[0].type == "packed"){
+    else if (datas.orderStatus[0].type == "packed") {
       packed++;
     }
-    else if(datas.orderStatus[0].type == "ordered"){
+    else if (datas.orderStatus[0].type == "ordered") {
       ordered++;
     }
-    else if(datas.orderStatus[0].type == "Shipped"){
+    else if (datas.orderStatus[0].type == "Shipped") {
       shipped++;
     }
-    else if(datas.orderStatus[0].type == "cancelled"){
+    else if (datas.orderStatus[0].type == "cancelled") {
       cancelled++;
     }
-    if(datas.createdAt.getMonth()+1 == 1){jan++}
-    else if(datas.createdAt.getMonth()+1 == 2){feb++}
-    else if(datas.createdAt.getMonth()+1 == 3){mar++}
-    else if(datas.createdAt.getMonth()+1 == 4){apr++}
-    else if(datas.createdAt.getMonth()+1 == 5){may++}
-    else if(datas.createdAt.getMonth()+1 == 6){jun++}
-    else if(datas.createdAt.getMonth()+1 == 7){jul++}
-    else if(datas.createdAt.getMonth()+1 == 8){aug++}
-    else if(datas.createdAt.getMonth()+1 == 9){sep++}
-    else if(datas.createdAt.getMonth()+1 == 10){oct++}
-    else if(datas.createdAt.getMonth()+1 == 11){nov++}
-    else if(datas.createdAt.getMonth()+1 == 12){dec++}
+    if (datas.createdAt.getMonth() + 1 == 1) { jan++ }
+    else if (datas.createdAt.getMonth() + 1 == 2) { feb++ }
+    else if (datas.createdAt.getMonth() + 1 == 3) { mar++ }
+    else if (datas.createdAt.getMonth() + 1 == 4) { apr++ }
+    else if (datas.createdAt.getMonth() + 1 == 5) { may++ }
+    else if (datas.createdAt.getMonth() + 1 == 6) { jun++ }
+    else if (datas.createdAt.getMonth() + 1 == 7) { jul++ }
+    else if (datas.createdAt.getMonth() + 1 == 8) { aug++ }
+    else if (datas.createdAt.getMonth() + 1 == 9) { sep++ }
+    else if (datas.createdAt.getMonth() + 1 == 10) { oct++ }
+    else if (datas.createdAt.getMonth() + 1 == 11) { nov++ }
+    else if (datas.createdAt.getMonth() + 1 == 12) { dec++ }
 
-    
+
   }
-  
-  res.render("adminPages/dashbord",{orders,revenue,users,delivered,packed,ordered,shipped,cancelled,jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec});
+
+  res.render("adminPages/dashbord", { orders, revenue, users, delivered, packed, ordered, shipped, cancelled, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec });
 };
 
 const logout = (req, res) => {
@@ -107,56 +108,55 @@ const logout = (req, res) => {
   res.redirect("/admin/");
 };
 
-const showorder = async(req, res) => {
+const showorder = async (req, res) => {
   const order = await Order.find({})
-  res.render("adminPages/order",{order});
+  res.render("adminPages/order", { order });
 };
 
-const moreorder = async(req,res)=>{
+const moreorder = async (req, res) => {
   // const { orderId } = req.body;
   const orderId = mongoose.Types.ObjectId(req.body.orderId);
-  const orderdetails = await Order.findById({_id:orderId})
-  const productDetails = await Order.aggregate([{ $match: { _id:orderId } }, { $unwind: '$cart_item' }, { $lookup: { from: 'products', localField: 'cart_item.productId', foreignField: '_id', as: 'products' } }])
- 
-  res.send({productDetails})
+  const orderdetails = await Order.findById({ _id: orderId })
+  const productDetails = await Order.aggregate([{ $match: { _id: orderId } }, { $unwind: '$cart_item' }, { $lookup: { from: 'products', localField: 'cart_item.productId', foreignField: '_id', as: 'products' } }])
+
+  res.send({ productDetails })
 }
 
-const orderstatus = async(req,res)=>{
+const orderstatus = async (req, res) => {
   let update = false
   const { status } = req.body
   const orderId = mongoose.Types.ObjectId(req.body.orderId);
   try {
-    await Order.findByIdAndUpdate(orderId,{$set:{orderStatus:{type:status}}})
+    await Order.findByIdAndUpdate(orderId, { $set: { orderStatus: { type: status } } })
     update = true
   } catch (error) {
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-    
+
   }
-  res.send({update})
+  res.send({ update })
 
 
 }
 
-const orderCancel = async(req,res)=>{
+const orderCancel = async (req, res) => {
   let cancel = false;
   const orderId = mongoose.Types.ObjectId(req.body.orderId);
   try {
-    await Order.findByIdAndUpdate(orderId,{$set:{orderStatus:{type:"cancelled"}}})
+    await Order.findByIdAndUpdate(orderId, { $set: { orderStatus: { type: "cancelled" } } })
     const orderqt = await Order.findById(orderId)
-   for( cartItem of orderqt.cart_item ){
-    let qty = cartItem.product_quantity
-    let prId = cartItem.productId
-    await Stock.findOneAndUpdate({productId:prId},{$inc:{stock:qty}})
-    
+    for (cartItem of orderqt.cart_item) {
+      let qty = cartItem.product_quantity
+      let prId = cartItem.productId
+      await Stock.findOneAndUpdate({ productId: prId }, { $inc: { stock: qty } })
 
-   }
+
+    }
     cancel = true;
   } catch (error) {
     console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
   }
-  res.send({cancel})
+  res.send({ cancel })
 
-} 
+}
 
 const showUser = async (req, res) => {
   const showuser = await User.find({}).sort({ firstName: 1 });
@@ -165,7 +165,7 @@ const showUser = async (req, res) => {
 };
 const userState = async (req, res) => {
   const { id } = req.params;
-  
+
   await User.findByIdAndUpdate(id, { state: false });
 
   res.redirect("/admin/showUser");
@@ -253,7 +253,7 @@ const addProductPost = async (req, res) => {
     res.redirect("/admin/showProduct");
   } catch (error) {
     req.flash("exists", "Product already exists");
-    // console.log(error);
+    console.log("@@@@@@@@@@@@@@@@@", error);
     res.redirect("/admin/addProduct");
   }
 };
@@ -263,9 +263,9 @@ const deleteProduct = async (req, res) => {
   // console.log(userId);
   try {
     // await Product.findByIdAndDelete(productId);
-    await Product.findByIdAndUpdate(productId,{deleted:true})
+    await Product.findByIdAndUpdate(productId, { deleted: true })
     res.redirect("/admin/showProduct");
-  } catch (error) {}
+  } catch (error) { }
 };
 // edit product start ##################################################################################
 const editProductGet = async (req, res) => {
@@ -439,19 +439,19 @@ const addStock = async (req, res) => {
   }
 }
 
-const showCoupon = async(req,res)=>{
+const showCoupon = async (req, res) => {
   const coupon = await Coupon.find({})
-  res.render("adminPages/couponMng",{coupon})
+  res.render("adminPages/couponMng", { coupon })
 }
 
-const addCoupon = async(req,res)=>{
-  
-  const {couponCode,discount,maxAmount} = req.body;
-  let {expire} = req.body
-  expire= Number(expire)
-    let expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + expire);
-  
+const addCoupon = async (req, res) => {
+
+  const { couponCode, discount, maxAmount } = req.body;
+  let { expire } = req.body
+  expire = Number(expire)
+  let expiryDate = new Date();
+  expiryDate.setDate(expiryDate.getDate() + expire);
+
 
   const coupon = new Coupon({
     couponCode,
@@ -460,65 +460,65 @@ const addCoupon = async(req,res)=>{
     expiryDate
   })
   await coupon.save();
-  
+
 }
 
 const compare = async (req, res) => {
-  let dis = '' 
+  let dis = ''
   let error = false;
-const {couponCode}=req.body;
-const couponFind = await Coupon.find({couponCode})
-if (couponFind && couponFind.length > 0) {
-  
-
- dis = couponFind[0].discount
-const id = couponFind[0]._id
-const maximumLimit = couponFind[0].maxAmount
-const date = new Date()
-const exp = couponFind[0].expiryDate
- 
-if(exp > date){
- 
-  error = true;
-res.send({dis,id,maximumLimit,error})
-}else{
-  
-  await Coupon.findByIdAndDelete(id)
-  res.send({error})
-}
-}
-else{
+  const { couponCode } = req.body;
+  const couponFind = await Coupon.find({ couponCode })
+  if (couponFind && couponFind.length > 0) {
 
 
-res.send({error})
-}
+    dis = couponFind[0].discount
+    const id = couponFind[0]._id
+    const maximumLimit = couponFind[0].maxAmount
+    const date = new Date()
+    const exp = couponFind[0].expiryDate
+
+    if (exp > date) {
+
+      error = true;
+      res.send({ dis, id, maximumLimit, error })
+    } else {
+
+      await Coupon.findByIdAndDelete(id)
+      res.send({ error })
+    }
+  }
+  else {
+
+
+    res.send({ error })
+  }
 }
 
-const showBanner = async(req,res)=>{
+const showBanner = async (req, res) => {
   const banner = await Banner.find({});
-  res.render("adminPages/bannerMng",{banner})
+  res.render("adminPages/bannerMng", { banner })
 }
 
 
-const addBanner = async(req,res)=>{
+const addBanner = async (req, res) => {
   const name = req.body.name;
-  const banner = new Banner({name});
+  const banner = new Banner({ name });
   banner.image = req.files.map(f => ({ url: f.path, filename: f.filename }))
   try {
     await banner.save();
     res.redirect("/admin/showBanner")
   } catch (error) {
     console.log(error)
-  } 
-  
+  }
+
 }
 
-const bannertDelete = async(req,res)=>{
+const bannertDelete = async (req, res) => {
   let deleted = false;
   const { bannerId } = req.body;
-  
+
   try {
-    await Banner.deleteOne({ _id:bannerId });
+    await Banner.deleteOne({ _id: bannerId });
     deleted = true
   } catch {
     res.send("error!!!!!!!!!!!!!!!!!!!!!")
