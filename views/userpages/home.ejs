@@ -1,252 +1,269 @@
 <% layout('./layout/boilerplate') %>
-<section class="banner-area">
-  <div class="container">
-    <div class="row fullscreen align-items-center justify-content-start">
-      <div class="col-lg-12">
-        <div class="active-banner-slider owl-carousel">
-          <!-- single-slide -->
-          
-          <% for(data of banner){ %> 
-          <div class="row single-slide align-items-center d-flex">
-            <div class="col-lg-5 col-md-6">
-              <div class="banner-content">
-                <h1><%= data.name %> </h1>
-
-                
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="">
-                <div style="background-image: url('<%= data.image[0].url %>');width: 450px; height: 520px;background-size: cover;background-position: center;background-repeat: no-repeat;"></div>
-                
-              </div>
-            </div>
-          </div>
-          <% } %> 
-          
-         
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="owl-carousel active-product-area section_gap">
-  <!-- single product slide -->
-  <div class="single-product-slider">
+  <section class="banner-area">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-6 text-center">
-          <div class="section-title">
-            <h1>New Arrival</h1>
+      <div class="row fullscreen align-items-center justify-content-start">
+        <div class="col-lg-12">
+          <div class="active-banner-slider owl-carousel">
+            <!-- single-slide -->
+
+            <% for(data of banner){ %>
+              <div class="row single-slide align-items-center d-flex">
+                <div class="col-lg-5 col-md-6">
+                  <div class="banner-content">
+                    <h1>
+                      <%= data.name %>
+                    </h1>
+
+
+                  </div>
+                </div>
+                <div class=" col-sm-6">
+                  <div class="">
+                    <!-- <div class=""
+                      style="background-image: url('');width: 450px; height: 520px;background-size: cover;background-position: center;background-repeat: no-repeat;">
+                    </div> -->
+                    <img src="<%= data.image[0].url %>" alt="image">
+
+                  </div>
+                </div>
+              </div>
+              <% } %>
+
+
           </div>
         </div>
       </div>
-      <div class="row">
-        <!-- single product -->
-        <% if(product){ %> 
-        <% for(products of product){ %> 
-        <div class="col-lg-3 col-md-6">
-          <div class="single-product">
-            <a href="/product?id=<%= products._id %>">
-            <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: cover; background-position: center;background-repeat: no-repeat;"></div>
-          </a>
-            <div class="product-details mt-3">
-              <h6><%= products.product_name %></h6>
-              <div class="price">
-                <h6>₹ <%= products.finalPrice %></h6>
-                <h6 class="l-through">₹ <%= products.price %></h6>
-              </div>
-              <div class="prd-bottom">
-                <a  onclick="cart('<%= products._id %>')" class="social-info">
-                  <span class="ti-bag"></span>
-                  <p class="hover-text">add to bag</p>
-                </a>
-                 <a class="social-info" onclick="wishlist('<%= products._id %>')">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                
-                <a href="/product?id=<%= products._id %>" class="social-info">
-                  <span class="lnr lnr-move"></span>
-                  <p class="hover-text">view more</p>
-                </a>
-              </div>
+    </div>
+  </section>
+  <section class="owl-carousel active-product-area section_gap">
+    <!-- single product slide -->
+    <div class="single-product-slider">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+            <div class="section-title">
+              <h1>New Arrival</h1>
             </div>
           </div>
         </div>
-        <% } %> 
-        <% }else{ %>
-          <h1 class="tex-dark">SORRY!!! NO PRODUCTS EXIST</h1> 
-          <% } %> 
-        <!-- single product -->
+        <div class="row">
+          <!-- single product -->
+          <% if(product){ %>
+            <% for(products of product){ %>
+              <div class="col-lg-3 col-md-6">
+                <div class="single-product">
+                  <a href="/product?id=<%= products._id %>">
+                    <div
+                      style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: cover; background-position: center;background-repeat: no-repeat;">
+                    </div>
+                  </a>
+                  <div class="product-details mt-3">
+                    <h6>
+                      <%= products.product_name %>
+                    </h6>
+                    <div class="price">
+                      <h6>₹ <%= products.finalPrice %>
+                      </h6>
+                      <h6 class="l-through">₹ <%= products.price %>
+                      </h6>
+                    </div>
+                    <div class="prd-bottom">
+                      <a onclick="cart('<%= products._id %>')" class="social-info">
+                        <span class="ti-bag"></span>
+                        <p class="hover-text">add to bag</p>
+                      </a>
+                      <a class="social-info" onclick="wishlist('<%= products._id %>')">
+                        <span class="lnr lnr-heart"></span>
+                        <p class="hover-text">Wishlist</p>
+                      </a>
 
+                      <a href="/product?id=<%= products._id %>" class="social-info">
+                        <span class="lnr lnr-move"></span>
+                        <p class="hover-text">view more</p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+                <% }else{ %>
+                  <h1 class="tex-dark">SORRY!!! NO PRODUCTS EXIST</h1>
+                  <% } %>
+                    <!-- single product -->
+
+        </div>
       </div>
     </div>
-  </div>
-  <!-- single product slide -->
-  <div class="single-product-slider">
+    <!-- single product slide -->
+    <div class="single-product-slider">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+            <div class="section-title">
+              <h1>Best Selling</h1>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- single product -->
+          <% if(product){ %>
+            <% for(products of product){ %>
+              <div class="col-lg-3 col-md-6">
+                <div class="single-product">
+                  <a href="/product?id=<%= products._id %>">
+                    <div
+                      style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: cover;background-position: center;background-repeat: no-repeat;">
+                    </div>
+                  </a>
+                  <div class="product-details mt-3">
+                    <h6>
+                      <%= products.product_name %>
+                    </h6>
+                    <div class="price">
+                      <h6>₹ <%= products.finalPrice %>
+                      </h6>
+                      <h6 class="l-through">₹ <%= products.price %>
+                      </h6>
+                    </div>
+                    <div class="prd-bottom">
+                      <a onclick="cart('<%= products._id %>')" class="social-info">
+                        <span class="ti-bag"></span>
+                        <p class="hover-text">add to bag</p>
+                      </a>
+                      <a class="social-info" onclick="wishlist('<%= products._id %>')">
+                        <span class="lnr lnr-heart"></span>
+                        <p class="hover-text">Wishlist</p>
+                      </a>
+
+                      <a href="/product?id=<%= products._id %>" class="social-info">
+                        <span class="lnr lnr-move"></span>
+                        <p class="hover-text">view more</p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+                <% }else{ %>
+                  <h1>SORRY!!! NO PRODUCTS EXIST</h1>
+                  <% } %>
+                    <!-- single product -->
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end product Area -->
+
+
+
+  <!-- Start brand Area -->
+  <section class="brand-area section_gap">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-6 text-center">
-          <div class="section-title">
-            <h1>Best Selling</h1>
-          </div>
-        </div>
-      </div>
       <div class="row">
-        <!-- single product -->
-        <% if(product){ %> 
-        <% for(products of product){ %> 
-        <div class="col-lg-3 col-md-6">
-          <div class="single-product">
-            <a href="/product?id=<%= products._id %>">
-            <div style="background-image: url(<%=products.image[0].url%>);width: 240px;height: 330px;background-size: cover;background-position: center;background-repeat: no-repeat;"></div>
-          </a>
-            <div class="product-details mt-3">
-              <h6><%= products.product_name %></h6>
-              <div class="price">
-                <h6>₹ <%= products.finalPrice %></h6>
-                <h6 class="l-through">₹ <%= products.price %></h6>
-              </div>
-              <div class="prd-bottom">
-                <a  onclick="cart('<%= products._id %>')" class="social-info">
-                  <span class="ti-bag"></span>
-                  <p class="hover-text">add to bag</p>
-                </a>
-                <a class="social-info" onclick="wishlist('<%= products._id %>')">
-                  <span class="lnr lnr-heart"></span>
-                  <p class="hover-text">Wishlist</p>
-              </a>
-                
-                <a href="/product?id=<%= products._id %>" class="social-info">
-                  <span class="lnr lnr-move"></span>
-                  <p class="hover-text">view more</p>
-                </a>
-              </div>
+        <a class="col single-img" href="#">
+          <img class="img-fluid d-block mx-auto" src="img/brand/1.png" alt="" />
+        </a>
+        <a class="col single-img" href="#">
+          <img class="img-fluid d-block mx-auto" src="img/brand/2.png" alt="" />
+        </a>
+        <a class="col single-img" href="#">
+          <img class="img-fluid d-block mx-auto" src="img/brand/3.png" alt="" />
+        </a>
+        <a class="col single-img" href="#">
+          <img class="img-fluid d-block mx-auto" src="img/brand/4.png" alt="" />
+        </a>
+        <a class="col single-img" href="#">
+          <img class="img-fluid d-block mx-auto" src="img/brand/5.png" alt="" />
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- End brand Area -->
+
+
+  <!-- End related-product Area -->
+  <section class="features-area section_gap">
+    <div class="container">
+      <div class="row features-inner">
+        <!-- single features -->
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="single-features">
+            <div class="f-icon">
+              <img src="img/features/f-icon1.png" alt="" />
             </div>
+            <h6>Free Delivery</h6>
+            <p>Free Shipping on all order</p>
           </div>
         </div>
-        <% } %> 
-        <% }else{ %>
-          <h1>SORRY!!! NO PRODUCTS EXIST</h1> 
-          <% } %> 
-        <!-- single product -->
-     
-      </div>
-    </div>
-  </div>
-</section>
-<!-- end product Area -->
-
-
-
-<!-- Start brand Area -->
-<section class="brand-area section_gap">
-  <div class="container">
-    <div class="row">
-      <a class="col single-img" href="#">
-        <img class="img-fluid d-block mx-auto" src="img/brand/1.png" alt="" />
-      </a>
-      <a class="col single-img" href="#">
-        <img class="img-fluid d-block mx-auto" src="img/brand/2.png" alt="" />
-      </a>
-      <a class="col single-img" href="#">
-        <img class="img-fluid d-block mx-auto" src="img/brand/3.png" alt="" />
-      </a>
-      <a class="col single-img" href="#">
-        <img class="img-fluid d-block mx-auto" src="img/brand/4.png" alt="" />
-      </a>
-      <a class="col single-img" href="#">
-        <img class="img-fluid d-block mx-auto" src="img/brand/5.png" alt="" />
-      </a>
-    </div>
-  </div>
-</section>
-<!-- End brand Area -->
-
-
-<!-- End related-product Area -->
-<section class="features-area section_gap">
-  <div class="container">
-    <div class="row features-inner">
-      <!-- single features -->
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="single-features">
-          <div class="f-icon">
-            <img src="img/features/f-icon1.png" alt="" />
+        <!-- single features -->
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="single-features">
+            <div class="f-icon">
+              <img src="img/features/f-icon2.png" alt="" />
+            </div>
+            <h6>Return Policy</h6>
+            <p>Free Shipping on all order</p>
           </div>
-          <h6>Free Delivery</h6>
-          <p>Free Shipping on all order</p>
         </div>
-      </div>
-      <!-- single features -->
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="single-features">
-          <div class="f-icon">
-            <img src="img/features/f-icon2.png" alt="" />
+        <!-- single features -->
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="single-features">
+            <div class="f-icon">
+              <img src="img/features/f-icon3.png" alt="" />
+            </div>
+            <h6>24/7 Support</h6>
+            <p>Free Shipping on all order</p>
           </div>
-          <h6>Return Policy</h6>
-          <p>Free Shipping on all order</p>
         </div>
-      </div>
-      <!-- single features -->
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="single-features">
-          <div class="f-icon">
-            <img src="img/features/f-icon3.png" alt="" />
+        <!-- single features -->
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="single-features">
+            <div class="f-icon">
+              <img src="img/features/f-icon4.png" alt="" />
+            </div>
+            <h6>Secure Payment</h6>
+            <p>Free Shipping on all order</p>
           </div>
-          <h6>24/7 Support</h6>
-          <p>Free Shipping on all order</p>
-        </div>
-      </div>
-      <!-- single features -->
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="single-features">
-          <div class="f-icon">
-            <img src="img/features/f-icon4.png" alt="" />
-          </div>
-          <h6>Secure Payment</h6>
-          <p>Free Shipping on all order</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script>
-  function wishlist(productId){
-      fetch("/wishlistPost",{
-          method:"post",
-          headers:{ 'Content-Type': 'application/json'},
-          body: JSON.stringify({ productId })
-      }).then(res =>res.json()).then(data=>{
-          
-          if(data.login == false){
-             
-              window.location = "/login";
-          }else{
-            swal("Successfully added to wishlist","")
-          }
+  <script>
+    function wishlist(productId) {
+      fetch("/wishlistPost", {
+        method: "post",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId })
+      }).then(res => res.json()).then(data => {
+
+        if (data.login == false) {
+
+          window.location = "/login";
+        } else {
+          swal("Successfully added to wishlist", "")
+        }
       })
-  }
-</script>
-<script>
-  function cart(productId){
-     
-      fetch("/cartAdd",{
-          method:"post",
-          headers:{ 'Content-Type': 'application/json'},
-          body: JSON.stringify({ productId})
-      }).then(res =>res.json()).then(data=>{
-          
-          if(data.login == false && data.stock.stock == 0 ){
-             
-              swal("Out Of Stock!");
-          }else if(data.login == false){
-              window.location = "/login";
-          }else{
-            swal("Successfully added to cart","")
-          }
+    }
+  </script>
+  <script>
+    function cart(productId) {
+
+      fetch("/cartAdd", {
+        method: "post",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId })
+      }).then(res => res.json()).then(data => {
+
+        if (data.login == false && data.stock.stock == 0) {
+
+          swal("Out Of Stock!");
+        } else if (data.login == false) {
+          window.location = "/login";
+        } else {
+          swal("Successfully added to cart", "")
+        }
       })
-  }
-</script>
+    }
+  </script>

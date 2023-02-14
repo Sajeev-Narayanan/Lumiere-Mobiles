@@ -9,9 +9,11 @@
   outline: 0;
   border-radius: 40px 0px 0px 40px;
 }
+
 .nav-icon {
   min-width: 300px;
 }
+
 .search-field {
   width: 40%;
   height: 54px;
@@ -24,6 +26,7 @@
 .nav-css {
   height: 80px;
 }
+
 .nav-text {
   /* font-family: */
   font-style: normal;
@@ -74,5 +77,5 @@ body,
 html {
   height: 100%;
 }
-footer {
-}
+
+footer {}
